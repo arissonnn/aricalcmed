@@ -14,6 +14,7 @@
     ageYears: null,
     ageMonths: null,
     dob: '',
+    institution: 'geral',
     selectedIds: []
   };
 
@@ -28,12 +29,13 @@
   }
 
   function getAllResults() {
-    return AMLS.DRUGS.map(d => AMLS.calc.computeDrugResult(d, state));
+    const available = AMLS.calc.getAvailableDrugs(state.institution);
+    return available.map(d => AMLS.calc.computeDrugResult(d, state, state.institution));
   }
 
   function renderAll() {
     AMLS.render.renderVMStrip(getVM());
-    AMLS.render.renderDrugList(state, state.selectedIds);
+    AMLS.render.renderDrugList(state, state.selectedIds, state.institution);
     AMLS.render.renderSelectedCount(state.selectedIds);
   }
 
@@ -44,8 +46,20 @@
     document.getElementById('input-age-years').value = state.ageYears ?? '';
     document.getElementById('input-age-months').value = state.ageMonths ?? '';
     document.getElementById('input-dob').value = state.dob || '';
+    document.getElementById('select-institution').value = state.institution;
     document.querySelectorAll('.sex-toggle button').forEach(btn => {
       btn.classList.toggle('is-active', btn.dataset.sex === state.sex);
+    });
+  }
+
+  function populateInstitutionSelect() {
+    const sel = document.getElementById('select-institution');
+    sel.innerHTML = '';
+    AMLS.INSTITUTIONS.forEach(inst => {
+      const opt = document.createElement('option');
+      opt.value = inst.id;
+      opt.textContent = inst.label;
+      sel.appendChild(opt);
     });
   }
 
@@ -95,6 +109,15 @@
       });
     });
 
+    // Troca de instituição
+    document.getElementById('select-institution').addEventListener('change', e => {
+      state.institution = e.target.value;
+      // Limpar seleções ao trocar de instituição (drogas mudam)
+      state.selectedIds = [];
+      persist();
+      renderAll();
+    });
+
     // Delegação de clique nos cards de droga (marcar/desmarcar)
     document.getElementById('drug-list').addEventListener('click', e => {
       const btn = e.target.closest('[data-action="toggle-mark"]');
@@ -104,7 +127,7 @@
       if (idx >= 0) state.selectedIds.splice(idx, 1);
       else state.selectedIds.push(id);
       persist();
-      AMLS.render.renderDrugList(state, state.selectedIds);
+      AMLS.render.renderDrugList(state, state.selectedIds, state.institution);
       AMLS.render.renderSelectedCount(state.selectedIds);
     });
 
@@ -129,6 +152,7 @@
   function init() {
     const saved = AMLS.storage.load();
     if (saved) state = { ...DEFAULT_STATE, ...saved, name: '' }; // nome nunca persiste entre sessões
+    populateInstitutionSelect();
     syncInputsFromState();
     bindInputs();
     renderAll();

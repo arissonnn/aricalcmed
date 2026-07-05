@@ -33,10 +33,28 @@
   }
 
   /**
-   * Calcula os resultados de uma droga para um dado paciente.
+   * Retorna as diluições ativas para uma dada instituição.
+   * 'geral' mostra todas as diluições (de todas as instituições).
+   * Uma instituição específica mostra apenas as diluições daquela instituição.
+   */
+  function getActiveDilutions(drug, institution) {
+    if (!institution || institution === 'geral') return drug.dilutions;
+    return drug.dilutions.filter(d => !d.institution || d.institution === institution);
+  }
+
+  /**
+   * Filtra drogas disponíveis para uma instituição.
+   */
+  function getAvailableDrugs(institution) {
+    if (!institution || institution === 'geral') return AMLS.DRUGS;
+    return AMLS.DRUGS.filter(d => d.institutions && d.institutions.includes(institution));
+  }
+
+  /**
+   * Calcula os resultados de uma droga para um dado paciente e instituição.
    * Retorna { calcType, dilutionResults: [{label, rateLabel, ...}], observations, ... }
    */
-  function computeDrugResult(drug, patient) {
+  function computeDrugResult(drug, patient, institution) {
     const weight = patient.weight;
     const { min, max } = drug.safeRange;
     const decimals = min < 1 ? 3 : 2;
@@ -44,7 +62,8 @@
       ? `${formatBR(min, decimals)} ${drug.safeRange.unit}`
       : `${formatBR(min, decimals)} – ${formatBR(max, decimals)} ${drug.safeRange.unit}`;
 
-    const dilutionResults = drug.dilutions.map(d => {
+    const activeDilutions = getActiveDilutions(drug, institution);
+    const dilutionResults = activeDilutions.map(d => {
       let result = { label: d.label, rateLabel: '', valueMin: null, valueMax: null, unitLabel: '' };
 
       switch (drug.calcMode) {
@@ -112,5 +131,5 @@
     };
   }
 
-  AMLS.calc = { formatBR, computePBW, computeVM, computeDrugResult };
+  AMLS.calc = { formatBR, computePBW, computeVM, computeDrugResult, getActiveDilutions, getAvailableDrugs };
 })();

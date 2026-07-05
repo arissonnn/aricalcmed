@@ -74,16 +74,17 @@
   }
 
   /** Renderiza a lista completa de drogas, agrupada por categoria. */
-  function renderDrugList(patient, selectedIds) {
+  function renderDrugList(patient, selectedIds, institution) {
     const el = document.getElementById('drug-list');
     if (!patient.weight || patient.weight <= 0) {
       el.innerHTML = '<p class="drug-list__empty">Informe o peso do paciente para ver os cálculos.</p>';
       return;
     }
 
+    const available = AMLS.calc.getAvailableDrugs(institution);
     const byCategory = {};
-    AMLS.DRUGS.forEach(drug => {
-      const result = AMLS.calc.computeDrugResult(drug, patient);
+    available.forEach(drug => {
+      const result = AMLS.calc.computeDrugResult(drug, patient, institution);
       (byCategory[drug.category] = byCategory[drug.category] || []).push(result);
     });
 
