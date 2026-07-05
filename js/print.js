@@ -84,21 +84,15 @@
     const filtered = isSelection ? allResults.filter(r => selectedIds.includes(r.drugId)) : allResults;
     const title = isSelection ? 'Folha de Drogas Selecionadas' : 'Folha Completa de Drogas — AMLS';
 
-    const appUrl = window.location.origin + window.location.pathname.replace(/\/index\.html$/, '') + '/';
-    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=${encodeURIComponent(appUrl)}`;
-
     const sheet = document.getElementById('print-sheet');
     sheet.innerHTML = buildHeaderHTML(patient, vm, title) + `<div class="sheet-drugs sheet-drugs--cols">${buildDrugsHTML(filtered)}</div>
       <div class="sheet-footer">
         <div class="sheet-footer__note">Gerado por Drogas UTI/PS · Ferramenta de apoio — confira sempre contra o protocolo institucional.</div>
         <div class="sheet-footer__qr">
-          <img src="${qrUrl}" alt="QR Code" width="80" height="80" class="sheet-qr-img">
+          <img src="qrcode.png" alt="QR Code" width="80" height="80" class="sheet-qr-img">
           <span class="sheet-qr-label">Acesse o app</span>
         </div>
       </div>`;
-
-    document.body.classList.add('is-printing');
-    window.print();
   }
 
   window.addEventListener('afterprint', () => {
