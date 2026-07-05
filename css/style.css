@@ -346,9 +346,13 @@ input:focus-visible, button:focus-visible {
 .drug-card__table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
 .drug-card__table td { padding: 3px 0; font-size: 12.5px; border-top: 1px solid var(--border); }
 .drug-card__table tr:first-child td { border-top: none; }
-.dl-label { color: var(--text-muted); }
-.dl-rate { font-family: var(--font-mono); text-align: right; font-weight: 600; white-space: nowrap; }
+.dl-cell { padding: 4px 0; }
+.dl-label { font-size: 12px; color: var(--text); line-height: 1.4; }
+.dl-simple { font-size: 12px; color: var(--text-muted); }
+.dl-rate { font-family: var(--font-mono); text-align: right; font-weight: 600; white-space: nowrap; vertical-align: middle; }
 .dl-extra td { font-size: 11px; color: var(--cat-teal); padding-top: 0; }
+
+.drug-card__ampoule { font-size: 11px; color: var(--text-muted); margin: 4px 0 0; padding: 2px 8px; background: rgba(0,0,0,0.03); border-radius: 4px; }
 
 .drug-card__obs { font-size: 12px; color: var(--text-muted); margin: 4px 0 0; }
 .drug-card__datanote { font-size: 11.5px; color: var(--cat-amber); margin: 6px 0 0; }
@@ -357,6 +361,9 @@ input:focus-visible, button:focus-visible {
 #print-sheet { display: none; }
 
 @media print {
+  body.is-printing {
+    background: #fff !important;
+  }
   body.is-printing #app-header,
   body.is-printing #vm-strip,
   body.is-printing #app-main {
@@ -366,6 +373,7 @@ input:focus-visible, button:focus-visible {
     display: block !important;
     background: #fff;
     color: #111;
+    min-height: 100vh;
   }
 
   @page { size: A4 portrait; margin: 14mm 12mm; }
@@ -398,5 +406,18 @@ input:focus-visible, button:focus-visible {
   .sheet-drug__range { font-weight: 400; color: #555; }
   .sheet-drug__row { display: flex; justify-content: space-between; font-size: 10.5px; font-family: var(--font-mono); }
   .sheet-drug__obs { font-size: 9.5px; color: #444; }
-  .sheet-footer { font-size: 9px; color: #777; margin-top: 10px; border-top: 1px solid #ccc; padding-top: 4px; }
+  .sheet-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 9px;
+    color: #777;
+    margin-top: 10px;
+    border-top: 1px solid #ccc;
+    padding-top: 6px;
+  }
+  .sheet-footer__note { flex: 1; }
+  .sheet-footer__qr { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .sheet-qr-img { display: block; border: none; }
+  .sheet-qr-label { font-size: 7px; color: #999; }
 }

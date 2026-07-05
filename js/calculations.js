@@ -64,7 +64,7 @@
 
     const activeDilutions = getActiveDilutions(drug, institution);
     const dilutionResults = activeDilutions.map(d => {
-      let result = { label: d.label, rateLabel: '', valueMin: null, valueMax: null, unitLabel: '' };
+      let result = { label: d.label, rateLabel: '', valueMin: null, valueMax: null, unitLabel: '', prep: d.prep || null, conc: d.conc, concUnit: d.concUnit };
 
       switch (drug.calcMode) {
         case 'weightContinuous': {
@@ -125,6 +125,7 @@
       calcMode: drug.calcMode,
       safeRangeLabel,
       commercialNames: drug.commercialNames,
+      ampoule: drug.ampoule || null,
       observations: drug.observations,
       dataNote: drug.dataNote || null,
       dilutionResults

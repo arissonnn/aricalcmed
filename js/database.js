@@ -65,6 +65,7 @@ AMLS.DRUGS = [
     id: 'noradrenalina', name: 'Noradrenalina', category: 'vasopressor',
     institutions: ['geral', 'sccd'],
     commercialNames: ['Norepinefrina (genérico)'],
+    ampoule: { mg: 8, mL: 4 },
     safeRange: { min: 0.01, max: 2, unit: 'mcg/kg/min', notes: 'Usual: 0,05–0,5' },
     calcMode: 'weightContinuous', rateBasis: 'perMin',
     dilutions: [
@@ -74,10 +75,14 @@ AMLS.DRUGS = [
       { label: '16mg → SG5% 250mL', conc: 64, concUnit: 'mcg/mL', institution: 'geral' },
       { label: '32mg → SG5% 250mL', conc: 128, concUnit: 'mcg/mL', institution: 'geral' },
       // SCCD
-      { label: 'SG5% 234mL + 16mL (8mg) [K:1]', conc: 32, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'SG5% 218mL + 32mL (16mg) [K:2]', conc: 64, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'SG5%/SF 200mL (100µg/mL) [K:1,66]', conc: 100, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'SG5%/SF 200mL (200µg/mL)', conc: 200, concUnit: 'mcg/mL', institution: 'sccd' }
+      { label: 'SG5% 234mL + 16mL (8mg) [K:1]', conc: 128, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 4, dil: 234, dilLabel: 'SG5%', vol: 250, k: 1 } },
+      { label: 'SG5% 218mL + 32mL (16mg) [K:2]', conc: 256, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 8, dil: 218, dilLabel: 'SG5%', vol: 250, k: 2 } },
+      { label: 'SG5%/SF 200mL (100µg/mL) [K:1,66]', conc: 100, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { text: '4 ampolas (8 mg / 4 mL) + SG5%/SF 180 mL = 200 mL → 100 µg/mL' } },
+      { label: 'SG5%/SF 200mL (200µg/mL)', conc: 200, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { text: '8 ampolas (8 mg / 4 mL) + SG5%/SF 160 mL = 200 mL → 200 µg/mL' } }
     ],
     observations: '1ª linha choque distributivo. ⚠️ Não misturar com bicarbonato. ⚠️ Extravasamento = necrose.'
   },
@@ -85,6 +90,7 @@ AMLS.DRUGS = [
     id: 'vasopressina', name: 'Vasopressina', category: 'vasopressor',
     institutions: ['geral', 'sccd'],
     commercialNames: ['Vasopressina (genérico)'],
+    ampoule: { UI: 20, mL: 1 },
     safeRange: { min: 0.01, max: 0.04, unit: 'UI/min', notes: 'Dose fixa 0,03 UI/min. 2ª linha.' },
     calcMode: 'fixedRange', rateBasis: 'perMin',
     dilutions: [
@@ -92,8 +98,10 @@ AMLS.DRUGS = [
       { label: '20UI → 100mL', conc: 0.2, concUnit: 'UI/mL', institution: 'geral' },
       { label: '40UI → 250mL', conc: 0.16, concUnit: 'UI/mL', institution: 'geral' },
       // SCCD
-      { label: 'SF 99mL + 1 amp (0,2 UI/mL)', conc: 0.2, concUnit: 'UI/mL', institution: 'sccd' },
-      { label: 'SF 98mL + 2 amp (0,4 UI/mL)', conc: 0.4, concUnit: 'UI/mL', institution: 'sccd' }
+      { label: 'SF 99mL + 1 amp (0,2 UI/mL)', conc: 0.2, concUnit: 'UI/mL', institution: 'sccd',
+        prep: { amp: 1, dil: 99, dilLabel: 'SF 0,9%', vol: 100 } },
+      { label: 'SF 98mL + 2 amp (0,4 UI/mL)', conc: 0.4, concUnit: 'UI/mL', institution: 'sccd',
+        prep: { amp: 2, dil: 98, dilLabel: 'SF 0,9%', vol: 100 } }
     ],
     observations: '2ª linha no choque distributivo refratário. Dose usual: 0,03 UI/min.'
   },
@@ -101,6 +109,7 @@ AMLS.DRUGS = [
     id: 'nitroprussiato', name: 'Nitroprussiato de Sódio', category: 'vasopressor',
     institutions: ['geral', 'sccd'],
     commercialNames: ['Nipride', 'Nitroprussiato (genérico)'],
+    ampoule: { mg: 50, mL: 2 },
     safeRange: { min: 0.25, max: 10, unit: 'mcg/kg/min' },
     calcMode: 'weightContinuous', rateBasis: 'perMin',
     dilutions: [
@@ -108,8 +117,10 @@ AMLS.DRUGS = [
       { label: '25mg → SG5% 250mL', conc: 100, concUnit: 'mcg/mL', institution: 'geral' },
       { label: '50mg → SG5% 250mL', conc: 200, concUnit: 'mcg/mL', institution: 'geral' },
       // SCCD
-      { label: 'SF/SG5% 248mL + 2mL (200µg/mL) [K:3,33]', conc: 200, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'SG5% 246mL + 4mL (400µg/mL)', conc: 400, concUnit: 'mcg/mL', institution: 'sccd' }
+      { label: 'SF/SG5% 248mL + 2mL (200µg/mL) [K:3,33]', conc: 200, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 1, dil: 248, dilLabel: 'SF/SG5%', vol: 250, k: 3.33 } },
+      { label: 'SG5% 246mL + 4mL (400µg/mL)', conc: 400, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 2, dil: 246, dilLabel: 'SG5%', vol: 250 } }
     ],
     observations: '⚠️ PROTEGER DA LUZ. ⚠️ Trocar soro e equipo de 8/8h. ⚠️ Risco de intoxicação por tiocianato em uso > 48h.'
   },
@@ -117,6 +128,7 @@ AMLS.DRUGS = [
     id: 'nitroglicerina', name: 'Nitroglicerina', category: 'vasopressor',
     institutions: ['geral', 'sccd'],
     commercialNames: ['Tridil'],
+    ampoule: { mg: 25, mL: 5 },
     safeRange: { min: 5, max: 200, unit: 'mcg/min' },
     calcMode: 'fixedRange', rateBasis: 'perMin',
     dilutions: [
@@ -124,9 +136,12 @@ AMLS.DRUGS = [
       { label: '25mg → SG5% 250mL', conc: 100, concUnit: 'mcg/mL', institution: 'geral' },
       { label: '50mg → SG5% 250mL', conc: 200, concUnit: 'mcg/mL', institution: 'geral' },
       // SCCD
-      { label: 'SG5% 245mL + 5mL (100µg/mL)', conc: 100, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'SF/SG5% 240mL + 10mL (200µg/mL) [K:3,33]', conc: 200, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'SG5% 230mL + 20mL (400µg/mL)', conc: 400, concUnit: 'mcg/mL', institution: 'sccd' }
+      { label: 'SG5% 245mL + 5mL (100µg/mL)', conc: 100, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 1, dil: 245, dilLabel: 'SG5%', vol: 250 } },
+      { label: 'SF/SG5% 240mL + 10mL (200µg/mL) [K:3,33]', conc: 200, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 2, dil: 240, dilLabel: 'SF/SG5%', vol: 250, k: 3.33 } },
+      { label: 'SG5% 230mL + 20mL (400µg/mL)', conc: 400, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 4, dil: 230, dilLabel: 'SG5%', vol: 250 } }
     ],
     observations: '⚠️ NÃO confundir com nitroprussiato! Tolerância em 24–48h. Dose não é peso-dependente.'
   },
@@ -136,6 +151,7 @@ AMLS.DRUGS = [
     id: 'dobutamina', name: 'Dobutamina', category: 'inotrope',
     institutions: ['geral', 'sccd'],
     commercialNames: ['Dobutamina (genérico)'],
+    ampoule: { mg: 250, mL: 20 },
     safeRange: { min: 2.5, max: 20, unit: 'mcg/kg/min' },
     calcMode: 'weightContinuous', rateBasis: 'perMin',
     dilutions: [
@@ -143,11 +159,16 @@ AMLS.DRUGS = [
       { label: '250mg → SG5%/SF 250mL', conc: 1000, concUnit: 'mcg/mL', institution: 'geral' },
       { label: '500mg → SG5%/SF 250mL', conc: 2000, concUnit: 'mcg/mL', institution: 'geral' },
       // SCCD
-      { label: 'SG5%/SF 230mL + 20mL (1000µg/mL) [K:16,6]', conc: 1000, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'SG5%/SF 210mL + 40mL (2000µg/mL) [K:33,3]', conc: 2000, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'SG5%/SF 190mL + 60mL (3000µg/mL)', conc: 3000, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'SG5%/SF 60mL + 40mL (5000µg/mL)', conc: 5000, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'Pura 60mL (12500µg/mL)', conc: 12500, concUnit: 'mcg/mL', institution: 'sccd' }
+      { label: 'SG5%/SF 230mL + 20mL (1000µg/mL) [K:16,6]', conc: 1000, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 1, dil: 230, dilLabel: 'SG5%/SF', vol: 250, k: 16.6 } },
+      { label: 'SG5%/SF 210mL + 40mL (2000µg/mL) [K:33,3]', conc: 2000, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 2, dil: 210, dilLabel: 'SG5%/SF', vol: 250, k: 33.3 } },
+      { label: 'SG5%/SF 190mL + 60mL (3000µg/mL)', conc: 3000, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 3, dil: 190, dilLabel: 'SG5%/SF', vol: 250 } },
+      { label: 'SG5%/SF 60mL + 40mL (5000µg/mL)', conc: 5000, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 2, dil: 60, dilLabel: 'SG5%/SF', vol: 100 } },
+      { label: 'Pura 60mL (12500µg/mL)', conc: 12500, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { text: '3 ampolas (250 mg / 20 mL) = 750 mg em 60 mL → 12500 µg/mL' } }
     ],
     observations: 'Escolha no choque cardiogênico. ⚠️ Pode piorar hipotensão no choque distributivo.'
   },
@@ -155,6 +176,7 @@ AMLS.DRUGS = [
     id: 'dopamina', name: 'Dopamina', category: 'inotrope',
     institutions: ['geral', 'sccd'],
     commercialNames: ['Revivan'],
+    ampoule: { mg: 50, mL: 10 },
     safeRange: { min: 2, max: 20, unit: 'mcg/kg/min' },
     calcMode: 'weightContinuous', rateBasis: 'perMin',
     dilutions: [
@@ -162,9 +184,12 @@ AMLS.DRUGS = [
       { label: '50mg → SG5% 250mL', conc: 200, concUnit: 'mcg/mL', institution: 'geral' },
       { label: '100mg → SG5% 250mL', conc: 400, concUnit: 'mcg/mL', institution: 'geral' },
       // SCCD
-      { label: 'SG5%/SF 200mL + 50mL (1000µg/mL) [K:16,6]', conc: 1000, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'SG5% 150mL + 100mL (2000µg/mL)', conc: 2000, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'Pura 50mL (5000µg/mL)', conc: 5000, concUnit: 'mcg/mL', institution: 'sccd' }
+      { label: 'SG5%/SF 200mL + 50mL (1000µg/mL) [K:16,6]', conc: 1000, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 5, dil: 200, dilLabel: 'SG5%/SF', vol: 250, k: 16.6 } },
+      { label: 'SG5% 150mL + 100mL (2000µg/mL)', conc: 2000, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 10, dil: 150, dilLabel: 'SG5%', vol: 250 } },
+      { label: 'Pura 50mL (5000µg/mL)', conc: 5000, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { text: '5 ampolas (50 mg / 10 mL) = 250 mg em 50 mL → 5000 µg/mL' } }
     ],
     observations: 'Efeito dose-dependente. Perdeu espaço para noradrenalina (SOAP-II).'
   },
@@ -172,12 +197,16 @@ AMLS.DRUGS = [
     id: 'milrinona', name: 'Milrinona', category: 'inotrope',
     institutions: ['sccd'],
     commercialNames: ['Milrinona (genérico)'],
+    ampoule: { mg: 10, mL: 10 },
     safeRange: { min: 0.375, max: 0.75, unit: 'mcg/kg/min', notes: 'Ataque: 50 µg/kg em 10 min' },
     calcMode: 'weightContinuous', rateBasis: 'perMin',
     dilutions: [
-      { label: 'SG5%/SF 180mL + 20mL (100µg/mL)', conc: 100, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'SG5% 210mL + 40mL (160µg/mL)', conc: 160, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'SG5%/SF 80mL + 20mL (200µg/mL)', conc: 200, concUnit: 'mcg/mL', institution: 'sccd' }
+      { label: 'SG5%/SF 180mL + 20mL (100µg/mL)', conc: 100, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 2, dil: 180, dilLabel: 'SG5%/SF', vol: 200 } },
+      { label: 'SG5% 210mL + 40mL (160µg/mL)', conc: 160, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 4, dil: 210, dilLabel: 'SG5%', vol: 250 } },
+      { label: 'SG5%/SF 80mL + 20mL (200µg/mL)', conc: 200, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 2, dil: 80, dilLabel: 'SG5%/SF', vol: 100 } }
     ],
     observations: 'Inotrópico inodilatador. ⚠️ Requer ajuste para função renal. Ataque: 50 µg/kg em 10 min.'
   },
@@ -187,6 +216,7 @@ AMLS.DRUGS = [
     id: 'adrenalina-infusao', name: 'Adrenalina (Infusão)', category: 'vasopressor',
     institutions: ['geral', 'sccd'],
     commercialNames: ['Adrenalina (genérico)'],
+    ampoule: { mg: 1, mL: 1 },
     safeRange: { min: 0.01, max: 1, unit: 'mcg/kg/min' },
     calcMode: 'weightContinuous', rateBasis: 'perMin',
     dilutions: [
@@ -194,11 +224,16 @@ AMLS.DRUGS = [
       { label: '3mg → SG5% 250mL', conc: 12, concUnit: 'mcg/mL', institution: 'geral' },
       { label: '6mg → SG5% 250mL', conc: 24, concUnit: 'mcg/mL', institution: 'geral' },
       // SCCD
-      { label: 'SF 94mL + 6 amp (60µg/mL) [K:1]', conc: 60, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'SG5%/SF 248mL + 2mg (8µg/mL)', conc: 8, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'SG5%/SF 190mL + 10mg (50µg/mL)', conc: 50, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'SG5%/SF 180mL + 20mg (100µg/mL)', conc: 100, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'SG5%/SF 80mL + 20mg (200µg/mL)', conc: 200, concUnit: 'mcg/mL', institution: 'sccd' }
+      { label: 'SF 94mL + 6 amp (60µg/mL) [K:1]', conc: 60, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 6, dil: 94, dilLabel: 'SF 0,9%', vol: 100, k: 1 } },
+      { label: 'SG5%/SF 248mL + 2mg (8µg/mL)', conc: 8, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 2, dil: 248, dilLabel: 'SG5%/SF', vol: 250 } },
+      { label: 'SG5%/SF 190mL + 10mg (50µg/mL)', conc: 50, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 10, dil: 190, dilLabel: 'SG5%/SF', vol: 200 } },
+      { label: 'SG5%/SF 180mL + 20mg (100µg/mL)', conc: 100, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 20, dil: 180, dilLabel: 'SG5%/SF', vol: 200 } },
+      { label: 'SG5%/SF 80mL + 20mg (200µg/mL)', conc: 200, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 20, dil: 80, dilLabel: 'SG5%/SF', vol: 100 } }
     ],
     observations: '⚠️ NÃO confundir com a dose de PCR. Bradicardia: usar 2,5–12 mL/h na sol. 50µg/mL.'
   },
@@ -307,6 +342,7 @@ AMLS.DRUGS = [
     id: 'fentanil', name: 'Fentanil', category: 'continuous-sedation',
     institutions: ['geral', 'sccd'],
     commercialNames: ['Fentanil (genérico)'],
+    ampoule: { mcg: 500, mL: 10 },
     safeRange: { min: 0.7, max: 10, unit: 'mcg/kg/h' },
     calcMode: 'weightContinuous', rateBasis: 'perHour',
     dilutions: [
@@ -314,10 +350,14 @@ AMLS.DRUGS = [
       { label: '2,5mg → SF 250mL', conc: 10, concUnit: 'mcg/mL', institution: 'geral' },
       { label: '5mg → SF 250mL', conc: 20, concUnit: 'mcg/mL', institution: 'geral' },
       // SCCD
-      { label: 'SG5%/SF 80mL + 20mL (10µg/mL)', conc: 10, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'SF 160mL + 40mL (10µg/mL)', conc: 10, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'SG5% 60mL + 40mL (20µg/mL)', conc: 20, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'Puro 60mL (50µg/mL)', conc: 50, concUnit: 'mcg/mL', institution: 'sccd' }
+      { label: 'SG5%/SF 80mL + 20mL (10µg/mL)', conc: 10, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 2, dil: 80, dilLabel: 'SG5%/SF', vol: 100 } },
+      { label: 'SF 160mL + 40mL (10µg/mL)', conc: 10, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 4, dil: 160, dilLabel: 'SF 0,9%', vol: 200 } },
+      { label: 'SG5% 60mL + 40mL (20µg/mL)', conc: 20, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 4, dil: 60, dilLabel: 'SG5%', vol: 100 } },
+      { label: 'Puro 60mL (50µg/mL)', conc: 50, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { text: '6 ampolas (500 µg / 10 mL) = 3000 µg em 60 mL → 50 µg/mL' } }
     ],
     observations: '⚠️ Rigidez torácica se bolus rápido. Naloxona é o antídoto.'
   },
@@ -325,6 +365,7 @@ AMLS.DRUGS = [
     id: 'dexmedetomidina', name: 'Dexmedetomidina', category: 'continuous-sedation',
     institutions: ['geral', 'sccd'],
     commercialNames: ['Precedex'],
+    ampoule: { mcg: 200, mL: 2 },
     safeRange: { min: 0.2, max: 0.7, unit: 'mcg/kg/h', notes: 'Ataque: 1,0 mcg/kg em 10 min' },
     calcMode: 'weightContinuous', rateBasis: 'perHour',
     dilutions: [
@@ -332,7 +373,8 @@ AMLS.DRUGS = [
       { label: '400mcg → SF 250mL', conc: 1.6, concUnit: 'mcg/mL', institution: 'geral' },
       { label: '800mcg → SF 250mL', conc: 3.2, concUnit: 'mcg/mL', institution: 'geral' },
       // SCCD
-      { label: 'SF 96mL + 4mL (4µg/mL)', conc: 4, concUnit: 'mcg/mL', institution: 'sccd' }
+      { label: 'SF 96mL + 4mL (4µg/mL)', conc: 4, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 2, dil: 96, dilLabel: 'SF 0,9%', vol: 100 } }
     ],
     observations: '⚠️ SEM depressão respiratória relevante. ⚠️ Bradicardia/hipotensão. Ótima para desmame de VM. Ataque: 1 µg/kg em 10 min.'
   },
@@ -341,13 +383,18 @@ AMLS.DRUGS = [
     id: 'midazolam-infusao', name: 'Midazolam (Infusão)', category: 'continuous-sedation',
     institutions: ['sccd'],
     commercialNames: ['Dormonid'],
+    ampoule: { mg: 50, mL: 10 },
     safeRange: { min: 0.02, max: 0.3, unit: 'mg/kg/h', notes: 'Leve: 0,02–0,1 | Profunda: 0,1–0,3' },
     calcMode: 'weightContinuous', rateBasis: 'perHour',
     dilutions: [
-      { label: 'SF 80mL + 20mL (1 mg/mL)', conc: 1000, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'SF 160mL + 40mL (1000 µg/mL)', conc: 1000, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'SG5% 120mL + 80mL (2000 µg/mL)', conc: 2000, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'Puro 60mL (5000 µg/mL)', conc: 5000, concUnit: 'mcg/mL', institution: 'sccd' }
+      { label: 'SF 80mL + 20mL (1 mg/mL)', conc: 1000, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 2, dil: 80, dilLabel: 'SF 0,9%', vol: 100 } },
+      { label: 'SF 160mL + 40mL (1000 µg/mL)', conc: 1000, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 4, dil: 160, dilLabel: 'SF 0,9%', vol: 200 } },
+      { label: 'SG5% 120mL + 80mL (2000 µg/mL)', conc: 2000, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 8, dil: 120, dilLabel: 'SG5%', vol: 200 } },
+      { label: 'Puro 60mL (5000 µg/mL)', conc: 5000, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { text: '6 ampolas (50 mg / 10 mL) = 300 mg em 60 mL → 5000 µg/mL' } }
     ],
     observations: '⚠️ Depressão respiratória dose-dependente. A ampola de 50mg/10mL é a mais usada p/ BIC.'
   },
@@ -358,7 +405,8 @@ AMLS.DRUGS = [
     safeRange: { min: 1.5, max: 4.5, unit: 'mg/kg/h', notes: 'Ataque: 1–2,5 mg/kg. Máx 6–12 mg/kg/h' },
     calcMode: 'weightContinuous', rateBasis: 'perHour',
     dilutions: [
-      { label: 'Frasco puro 60mL (10 mg/mL)', conc: 10, concUnit: 'mg/mL', institution: 'sccd' }
+      { label: 'Frasco puro 60mL (10 mg/mL)', conc: 10, concUnit: 'mg/mL', institution: 'sccd',
+        prep: { text: 'Frasco ampola 20 mL a 1% (10 mg/mL). Usar 3 frascos = 60 mL' } }
     ],
     observations: '⚠️ Hipotensão. ⚠️ Síndrome da infusão do propofol se > 48h ou doses altas. Estabilidade 12h.'
   },
@@ -366,11 +414,14 @@ AMLS.DRUGS = [
     id: 'cetamina-infusao', name: 'Cetamina (Infusão)', category: 'continuous-sedation',
     institutions: ['sccd'],
     commercialNames: ['Ketamin S(+)', 'Ketalar'],
+    ampoule: { mg: 500, mL: 10 },
     safeRange: { min: 2, max: 7, unit: 'mcg/kg/min', notes: 'Alternativa: 0,1–0,5 mg/min' },
     calcMode: 'weightContinuous', rateBasis: 'perMin',
     dilutions: [
-      { label: 'SF 490mL + 10mL (1 mg/mL)', conc: 1000, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'SG5%/SF 240mL + 10mL (2000 µg/mL)', conc: 2000, concUnit: 'mcg/mL', institution: 'sccd' }
+      { label: 'SF 490mL + 10mL (1 mg/mL)', conc: 1000, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 1, dil: 490, dilLabel: 'SF 0,9%', vol: 500 } },
+      { label: 'SG5%/SF 240mL + 10mL (2000 µg/mL)', conc: 2000, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { amp: 1, dil: 240, dilLabel: 'SG5%/SF', vol: 250 } }
     ],
     observations: 'Boa estabilidade hemodinâmica. Broncoespasmo grave: 0,15–2,5 mg/kg/h. ⚠️ Sialorreia, alucinações.'
   },
@@ -381,9 +432,12 @@ AMLS.DRUGS = [
     safeRange: { min: 0.05, max: 0.2, unit: 'mcg/kg/min', notes: 'Leve/Mod: 0,05–0,1 | Profunda: 0,1–0,2' },
     calcMode: 'weightContinuous', rateBasis: 'perMin',
     dilutions: [
-      { label: 'SF/SG5% 100mL + 2mg (20µg/mL)', conc: 20, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'SF/SG5% 100mL + 4mg (40µg/mL)', conc: 40, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'SF/SG5% 100mL + 5mg (50µg/mL)', conc: 50, concUnit: 'mcg/mL', institution: 'sccd' }
+      { label: 'SF/SG5% 100mL + 2mg (20µg/mL)', conc: 20, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { text: '1 frasco (2 mg) + SF/SG5% 100 mL → 20 µg/mL' } },
+      { label: 'SF/SG5% 100mL + 4mg (40µg/mL)', conc: 40, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { text: '2 frascos (2 mg) + SF/SG5% 100 mL → 40 µg/mL' } },
+      { label: 'SF/SG5% 100mL + 5mg (50µg/mL)', conc: 50, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { text: '1 frasco (5 mg) + SF/SG5% 100 mL → 50 µg/mL' } }
     ],
     observations: '⚠️ Meia-vida curta (3–5 min). Suspender se hipotensão. ⚠️ Rigidez torácica se bolus.'
   },
@@ -393,11 +447,14 @@ AMLS.DRUGS = [
     id: 'rocuronio-infusao', name: 'Rocurônio (Infusão)', category: 'continuous-blocker',
     institutions: ['sccd'],
     commercialNames: ['Esmeron'],
+    ampoule: { mg: 50, mL: 5 },
     safeRange: { min: 0.48, max: 0.72, unit: 'mg/kg/h', notes: 'Ataque: 0,6–1 mg/kg' },
     calcMode: 'weightContinuous', rateBasis: 'perHour',
     dilutions: [
-      { label: 'SF 80mL + 20mL (2 mg/mL)', conc: 2, concUnit: 'mg/mL', institution: 'sccd' },
-      { label: 'SF/SG5% 190mL + 100mg (0,5 mg/mL)', conc: 0.5, concUnit: 'mg/mL', institution: 'sccd' }
+      { label: 'SF 80mL + 20mL (2 mg/mL)', conc: 2, concUnit: 'mg/mL', institution: 'sccd',
+        prep: { amp: 4, dil: 80, dilLabel: 'SF 0,9%', vol: 100 } },
+      { label: 'SF/SG5% 190mL + 100mg (0,5 mg/mL)', conc: 0.5, concUnit: 'mg/mL', institution: 'sccd',
+        prep: { amp: 2, dil: 190, dilLabel: 'SF/SG5%', vol: 200 } }
     ],
     observations: 'Reversão: sugamadex. ⚠️ Monitorar grau de bloqueio (TOF).'
   },
@@ -405,11 +462,14 @@ AMLS.DRUGS = [
     id: 'cisatracurio-infusao', name: 'Cisatracúrio (Infusão)', category: 'continuous-blocker',
     institutions: ['sccd'],
     commercialNames: ['Nimbex'],
+    ampoule: { mg: 10, mL: 5 },
     safeRange: { min: 1, max: 3, unit: 'mcg/kg/min', notes: 'Ataque: 0,15 mg/kg' },
     calcMode: 'weightContinuous', rateBasis: 'perMin',
     dilutions: [
-      { label: 'SG5%/SF 50mL + 20mg (1000 µg/mL)', conc: 1000, concUnit: 'mcg/mL', institution: 'sccd' },
-      { label: 'SG5%/SF 80mL + 20mg (400 µg/mL)', conc: 400, concUnit: 'mcg/mL', institution: 'sccd' }
+      { label: 'SG5%/SF 50mL + 20mg (1000 µg/mL)', conc: 1000, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { text: '2 ampolas (10 mg / 5 mL) + SG5%/SF 50 mL = 60 mL → 1000 µg/mL' } },
+      { label: 'SG5%/SF 80mL + 20mg (400 µg/mL)', conc: 400, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { text: '2 ampolas (10 mg / 5 mL) + SG5%/SF 80 mL = 90 mL → 400 µg/mL' } }
     ],
     observations: 'Eliminação de Hofmann (independente de fígado/rins). Escolha em hepatopatas/nefropatas.'
   },
@@ -483,7 +543,8 @@ AMLS.DRUGS = [
     dilutions: [
       { label: '50UI → SF 250mL', conc: 0.2, concUnit: 'UI/mL', institution: 'geral' },
       { label: '100UI → SF 250mL', conc: 0.4, concUnit: 'UI/mL', institution: 'geral' },
-      { label: 'SF 99mL + Insulina 1mL (1 UI/mL)', conc: 1, concUnit: 'UI/mL', institution: 'sccd' }
+      { label: 'SF 99mL + Insulina 1mL (1 UI/mL)', conc: 1, concUnit: 'UI/mL', institution: 'sccd',
+        prep: { text: '1 mL de Insulina Regular (100 UI/mL) + SF 99 mL = 100 mL → 1 UI/mL' } }
     ],
     observations: '⚠️ Adsorve ao plástico do equipo — lavar antes de usar. ⚠️ Monitorizar glicemia de 1/1h.'
   },
@@ -541,10 +602,12 @@ AMLS.DRUGS = [
     id: 'lidocaina', name: 'Lidocaína (Xilocaína)', category: 'other',
     institutions: ['sccd'],
     commercialNames: ['Xilocaína 2%'],
+    ampoule: { mg: 100, mL: 5 },
     safeRange: { min: 1, max: 4, unit: 'mg/min', notes: 'Ataque: 1–3 mg/kg' },
     calcMode: 'fixedRange', rateBasis: 'perMin',
     dilutions: [
-      { label: 'SG5%/SF 60mL + 40mL (8 mg/mL)', conc: 8, concUnit: 'mg/mL', institution: 'sccd' }
+      { label: 'SG5%/SF 60mL + 40mL (8 mg/mL)', conc: 8, concUnit: 'mg/mL', institution: 'sccd',
+        prep: { amp: 8, dil: 60, dilLabel: 'SG5%/SF', vol: 100 } }
     ],
     observations: 'Tabela BIC: 7,5mL/h = 1mg/min · 15mL/h = 2mg/min · 22,5mL/h = 3mg/min · 30mL/h = 4mg/min.'
   },
@@ -565,11 +628,14 @@ AMLS.DRUGS = [
     id: 'furosemida', name: 'Furosemida (Lasix)', category: 'other',
     institutions: ['sccd'],
     commercialNames: ['Lasix'],
+    ampoule: { mg: 20, mL: 2 },
     safeRange: { min: 10, max: 40, unit: 'mg/h', notes: 'Ataque: 1–1,5 mg/kg' },
     calcMode: 'fixedRange', rateBasis: 'perHour',
     dilutions: [
-      { label: 'SG5% 90mL + 10mL (1 mg/mL)', conc: 1, concUnit: 'mg/mL', institution: 'sccd' },
-      { label: 'SG5% 80mL + 20mL (2 mg/mL)', conc: 2, concUnit: 'mg/mL', institution: 'sccd' }
+      { label: 'SG5% 90mL + 10mL (1 mg/mL)', conc: 1, concUnit: 'mg/mL', institution: 'sccd',
+        prep: { amp: 5, dil: 90, dilLabel: 'SG5%', vol: 100 } },
+      { label: 'SG5% 80mL + 20mL (2 mg/mL)', conc: 2, concUnit: 'mg/mL', institution: 'sccd',
+        prep: { amp: 10, dil: 80, dilLabel: 'SG5%', vol: 100 } }
     ],
     observations: 'Ataque: 1–1,5 mg/kg IV. Manutenção: 10–40 mg/h em BIC.'
   },
@@ -582,7 +648,8 @@ AMLS.DRUGS = [
     safeRange: { min: 0.1, max: 0.4, unit: 'mcg/kg/min', notes: 'Ataque: 0,4 µg/kg/min · Manut: 0,1 µg/kg/min' },
     calcMode: 'weightContinuous', rateBasis: 'perMin',
     dilutions: [
-      { label: 'SG5%/SF 200mL + 50mL (50 µg/mL)', conc: 50, concUnit: 'mcg/mL', institution: 'sccd' }
+      { label: 'SG5%/SF 200mL + 50mL (50 µg/mL)', conc: 50, concUnit: 'mcg/mL', institution: 'sccd',
+        prep: { text: '1 frasco de 50 mL (250 µg/mL) + SG5%/SF 200 mL = 250 mL → 50 µg/mL' } }
     ],
     observations: 'Ataque: 0,4 µg/kg/min por 30 min. Manutenção: 0,1 µg/kg/min durante 12–42h.'
   },

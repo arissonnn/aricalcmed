@@ -80,7 +80,20 @@
       state.ageMonths = e.target.value === '' ? null : parseInt(e.target.value, 10); persist();
     });
     document.getElementById('input-dob').addEventListener('change', e => {
-      state.dob = e.target.value; persist();
+      state.dob = e.target.value;
+      if (state.dob) {
+        const birth = new Date(state.dob + 'T00:00:00');
+        const now = new Date();
+        let years = now.getFullYear() - birth.getFullYear();
+        let months = now.getMonth() - birth.getMonth();
+        if (now.getDate() < birth.getDate()) months--;
+        if (months < 0) { years--; months += 12; }
+        state.ageYears = years;
+        state.ageMonths = months;
+        document.getElementById('input-age-years').value = years;
+        document.getElementById('input-age-months').value = months;
+      }
+      persist(); renderAll();
     });
 
     document.querySelectorAll('.sex-toggle button').forEach(btn => {

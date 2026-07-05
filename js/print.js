@@ -56,9 +56,10 @@
       html += `<div class="sheet-category">
         <h2>${AMLS.CATEGORY_LABELS[cat]}</h2>`;
       byCategory[cat].forEach(r => {
-        const rows = r.dilutionResults.map(d =>
-          `<div class="sheet-drug__row"><span>${AMLS.render.escapeHTML(d.label)}</span><span>${d.rateLabel ? AMLS.render.escapeHTML(d.rateLabel) : ''}</span></div>`
-        ).join('');
+        const rows = r.dilutionResults.map(d => {
+          const prepHTML = AMLS.render.dilutionPrepHTML(d, r.ampoule);
+          return `<div class="sheet-drug__row"><span>${prepHTML}</span><span class="sheet-drug__rate">${d.rateLabel ? AMLS.render.escapeHTML(d.rateLabel) : ''}</span></div>`;
+        }).join('');
         html += `
           <div class="sheet-drug">
             <div class="sheet-drug__name">${AMLS.render.escapeHTML(r.drugName)} <span class="sheet-drug__range">(${AMLS.render.escapeHTML(r.safeRangeLabel)})</span></div>
@@ -83,9 +84,18 @@
     const filtered = isSelection ? allResults.filter(r => selectedIds.includes(r.drugId)) : allResults;
     const title = isSelection ? 'Folha de Drogas Selecionadas' : 'Folha Completa de Drogas — AMLS';
 
+    const appUrl = window.location.origin + window.location.pathname.replace(/\/index\.html$/, '') + '/';
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=${encodeURIComponent(appUrl)}`;
+
     const sheet = document.getElementById('print-sheet');
     sheet.innerHTML = buildHeaderHTML(patient, vm, title) + `<div class="sheet-drugs sheet-drugs--cols">${buildDrugsHTML(filtered)}</div>
-      <div class="sheet-footer">Gerado por Drogas UTI/PS · Ferramenta de apoio — confira sempre contra o protocolo institucional.</div>`;
+      <div class="sheet-footer">
+        <div class="sheet-footer__note">Gerado por Drogas UTI/PS · Ferramenta de apoio — confira sempre contra o protocolo institucional.</div>
+        <div class="sheet-footer__qr">
+          <img src="${qrUrl}" alt="QR Code" width="80" height="80" class="sheet-qr-img">
+          <span class="sheet-qr-label">Acesse o app</span>
+        </div>
+      </div>`;
 
     document.body.classList.add('is-printing');
     window.print();
