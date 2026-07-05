@@ -877,7 +877,6 @@ input:focus-visible, button:focus-visible {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     font-size: 10px;
     line-height: 1.3;
-    min-height: 100vh;
     position: static;
   }
 
@@ -900,6 +899,7 @@ input:focus-visible, button:focus-visible {
     font-size: 9px;
     color: #333;
     margin-bottom: 4px;
+    break-after: avoid;
   }
 
   /* ---- 3-column drug list ---- */
@@ -908,6 +908,9 @@ input:focus-visible, button:focus-visible {
     column-gap: 12px;
     margin-top: 4px;
     column-fill: auto;
+    break-inside: auto;
+    orphans: 2;
+    widows: 2;
   }
 
   /* ---- Super-category (can break across pages — only title stays with content) ---- */
