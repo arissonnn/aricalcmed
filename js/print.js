@@ -46,15 +46,32 @@
     `;
   }
 
+  function buildRSIChecklistHTML() {
+    const esc = AMLS.render.escapeHTML;
+    let html = `<div class="sheet-rsi-checklist">
+      <h3 class="sheet-rsi-checklist__title">☐ Checklist RSI</h3>
+      <div class="sheet-rsi-checklist__grid">`;
+    AMLS.RSI_CHECKLIST.forEach(item => {
+      html += `<div class="sheet-rsi-checklist__item">
+        <span class="sheet-rsi-checklist__box">☐</span>
+        <span>${esc(item.label)}</span>
+      </div>`;
+    });
+    html += `</div></div>`;
+    return html;
+  }
+
   function buildDrugsHTML(results) {
     const byCategory = {};
     results.forEach(r => (byCategory[r.category] = byCategory[r.category] || []).push(r));
 
     let html = '';
+    let hasRSI = false;
     AMLS.SUPER_ORDER.forEach(superId => {
       const catIds = AMLS.SUPER_CATEGORIES[superId];
       const hasAny = catIds.some(c => byCategory[c] && byCategory[c].length);
       if (!hasAny) return;
+      if (superId === 'rsi') hasRSI = true;
 
       html += `<div class="sheet-super">
         <h2 class="sheet-super__title">${AMLS.SUPER_LABELS[superId]}</h2>`;
@@ -77,6 +94,11 @@
         });
         html += `</div>`;
       });
+
+      // Inserir checklist RSI após as drogas de RSI
+      if (superId === 'rsi') {
+        html += buildRSIChecklistHTML();
+      }
 
       html += `</div>`;
     });
