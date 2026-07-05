@@ -907,12 +907,11 @@ input:focus-visible, button:focus-visible {
     column-width: 200px;
     column-gap: 12px;
     margin-top: 4px;
-    column-fill: balance;
+    column-fill: auto;
   }
 
-  /* ---- Super-category ---- */
+  /* ---- Super-category (can break across pages — only title stays with content) ---- */
   body.is-printing .sheet-super {
-    break-inside: avoid;
     margin-bottom: 6px;
   }
   body.is-printing .sheet-super__title {
