@@ -166,6 +166,9 @@
       state = { ...DEFAULT_STATE };
       AMLS.storage.clear();
       syncInputsFromState();
+      // Clear search
+      const searchInput = document.getElementById('input-search');
+      if (searchInput) searchInput.value = '';
       renderAll();
     });
 
@@ -176,6 +179,54 @@
     document.getElementById('btn-print-selected').addEventListener('click', () => {
       if (state.selectedIds.length === 0) return;
       AMLS.print.printSheet(state, getVM(), getAllResults(), state.selectedIds);
+    });
+
+    // ================ SEARCH / FILTER ================
+    let searchTimeout = null;
+    document.getElementById('input-search').addEventListener('input', e => {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        const query = e.target.value.trim().toLowerCase();
+        let visibleCount = 0;
+        const cards = document.querySelectorAll('.drug-card');
+        const superBlocks = document.querySelectorAll('.super-block');
+        const categoryBlocks = document.querySelectorAll('.category-block');
+
+        // Show/hide individual cards
+        cards.forEach(card => {
+          const name = (card.querySelector('h4')?.textContent || '').toLowerCase();
+          const commercial = (card.querySelector('.drug-card__commercial')?.textContent || '').toLowerCase();
+          const matches = !query || name.includes(query) || commercial.includes(query);
+          card.style.display = matches ? '' : 'none';
+          if (matches) visibleCount++;
+        });
+
+        // Show/hide category blocks and super blocks based on visible children
+        categoryBlocks.forEach(block => {
+          const visibleCards = block.querySelectorAll('.drug-card[style*="display: none"]');
+          const allCards = block.querySelectorAll('.drug-card');
+          block.style.display = visibleCards.length === allCards.length ? 'none' : '';
+        });
+        superBlocks.forEach(block => {
+          const visibleCats = block.querySelectorAll('.category-block:not([style*="display: none"])');
+          block.style.display = visibleCats.length === 0 ? 'none' : '';
+        });
+
+        // Show "no results" message
+        let noResultsEl = document.getElementById('search-no-results');
+        if (visibleCount === 0 && query) {
+          if (!noResultsEl) {
+            noResultsEl = document.createElement('p');
+            noResultsEl.id = 'search-no-results';
+            noResultsEl.className = 'search-no-results';
+            document.getElementById('drug-list').appendChild(noResultsEl);
+          }
+          noResultsEl.textContent = `Nenhuma droga encontrada para "${e.target.value.trim()}"`;
+          noResultsEl.style.display = '';
+        } else if (noResultsEl) {
+          noResultsEl.style.display = 'none';
+        }
+      }, 150);
     });
   }
 

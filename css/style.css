@@ -493,12 +493,34 @@ input:focus-visible, button:focus-visible {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   flex-wrap: wrap;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 10px 14px;
+  position: sticky;
+  top: calc(var(--header-h) + var(--patient-h) + 6px);
+  z-index: 8;
+}
+
+/* Disabled hint on print buttons */
+#print-toolbar .btn[disabled][title] { position: relative; }
+#print-toolbar .btn[disabled][title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface-alt);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 20;
 }
 #selected-count {
   font-size: 11.5px;
@@ -511,6 +533,44 @@ input:focus-visible, button:focus-visible {
   letter-spacing: 0.02em;
 }
 .print-toolbar__actions { display: flex; gap: 8px; }
+
+/* ================ Search bar ================ */
+#search-bar {
+  margin-bottom: 12px;
+}
+.search-input {
+  width: 100%;
+  padding: 9px 14px 9px 36px;
+  font-size: 13px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-family: var(--font-ui);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238B93A6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cpath d='m21 21-4.3-4.3'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 12px center;
+}
+.search-input::placeholder { color: var(--text-muted); opacity: 0.7; }
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.search-input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  height: 16px;
+  width: 16px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%238B93A6'%3E%3Cpath d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/%3E%3C/svg%3E") center no-repeat;
+  cursor: pointer;
+}
+.search-no-results {
+  color: var(--text-muted);
+  padding: 30px 0;
+  text-align: center;
+  font-size: 13px;
+}
 
 /* ================ Category Jump Bar ================ */
 #category-jump {
@@ -549,8 +609,25 @@ input:focus-visible, button:focus-visible {
 
 .drug-list__empty {
   color: var(--text-muted);
-  padding: 40px 0;
+  padding: 48px 24px;
   text-align: center;
+  font-size: 13px;
+  line-height: 1.6;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.drug-list__empty-icon {
+  font-size: 28px;
+  display: block;
+  margin-bottom: 8px;
+  opacity: 0.6;
+}
+.drug-list__empty strong {
+  color: var(--text);
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
 }
 
 /* ================ Super-categorias ================ */
@@ -742,123 +819,191 @@ input:focus-visible, button:focus-visible {
   .print-toolbar__actions { width: 100%; }
   .print-toolbar__actions .btn { flex: 1; text-align: center; }
   .drug-card__range { display: none; }
+  .drug-card__mark { width: 32px; height: 32px; font-size: 16px; }
+  .stepper--s button { width: 30px; height: 30px; font-size: 15px; }
+  .stepper--s input { width: 44px; font-size: 14px; }
 }
 
 @media (max-width: 480px) {
   .header-patient { gap: 2px 6px; padding: 3px 8px 4px; font-size: 11px; }
-  .stepper--s input { width: 36px; font-size: 12px; }
-  .stepper--s button { width: 24px; height: 24px; font-size: 12px; }
+  .stepper--s input { width: 40px; font-size: 13px; }
+  .stepper--s button { width: 28px; height: 28px; font-size: 13px; }
   .presets--s button:nth-child(n+3) { display: none; } /* mostra só 60 70 */
   .institution-selector label { display: none; }
   .vm-item { min-width: 60px; padding: 4px 10px; }
   .vm-value { font-size: 14px; }
-  .drug-card__header { grid-template-columns: 26px 1fr; }
+  .drug-card__header { grid-template-columns: 30px 1fr; }
+  .drug-card__mark { width: 30px; height: 30px; }
+  #print-toolbar { padding: 8px 10px; }
+  .search-input { font-size: 12px; padding: 8px 12px 8px 34px; }
 }
 
 /* ================ Print sheet (hidden on screen) ================ */
 #print-sheet { display: none; }
 
 @media print {
-  body.is-printing {
+  /* Global print adjustments — always apply */
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    color-adjust: exact;
+  }
+
+  @page {
+    margin: 8mm;
+    size: A4 portrait;
+  }
+
+  body {
     background: #fff !important;
   }
+
+  /* Only hide the app and show the print sheet when is-printing is active
+     (triggered by our print buttons). Direct browser Ctrl+P will still
+     show the app normally. */
   body.is-printing #app-header,
   body.is-printing #vm-strip,
-  body.is-printing #app-main {
+  body.is-printing #app-main,
+  body.is-printing #drawer-overlay,
+  body.is-printing #drawer {
     display: none !important;
   }
+
   body.is-printing #print-sheet {
     display: block !important;
+    visibility: visible !important;
     background: #fff;
     color: #111;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 10px;
+    line-height: 1.3;
     min-height: 100vh;
+    position: static;
   }
 
-  @page { margin: 10mm; }
-
-  .sheet-header__row {
+  /* ---- Header (compact) ---- */
+  body.is-printing .sheet-header__row {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 6px 16px;
-    font-size: 11px;
+    gap: 4px 12px;
+    font-size: 9px;
   }
-  .sheet-header h1 { font-size: 16px; margin: 0 0 4px; }
-  .sheet-header__meta { color: #555; }
-  .sheet-header__patient { border-bottom: 1px solid #999; padding-bottom: 6px; margin-bottom: 4px; }
-  .sheet-vm { font-size: 11px; color: #333; margin-bottom: 8px; }
+  body.is-printing .sheet-header h1 { font-size: 13px; margin: 0 0 2px; font-weight: 700; }
+  body.is-printing .sheet-header__meta { color: #555; font-size: 8.5px; }
+  body.is-printing .sheet-header__patient {
+    border-bottom: 1px solid #999;
+    padding-bottom: 3px;
+    margin-bottom: 2px;
+  }
+  body.is-printing .sheet-vm {
+    font-size: 9px;
+    color: #333;
+    margin-bottom: 4px;
+  }
 
-  .sheet-drugs--cols { column-width: 280px; column-gap: 18px; margin-top: 8px; }
+  /* ---- 3-column drug list ---- */
+  body.is-printing .sheet-drugs--cols {
+    column-width: 200px;
+    column-gap: 12px;
+    margin-top: 4px;
+    column-fill: balance;
+  }
 
-  /* Super-categoria no print */
-  .sheet-super { break-inside: avoid; margin-bottom: 8px; }
-  .sheet-super__title {
-    font-size: 12.5px;
+  /* ---- Super-category ---- */
+  body.is-printing .sheet-super {
+    break-inside: avoid;
+    margin-bottom: 6px;
+  }
+  body.is-printing .sheet-super__title {
+    font-size: 11px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: #111;
     border-bottom: 2px solid #222;
-    padding-bottom: 2px;
-    margin: 6px 0 2px;
+    padding-bottom: 1px;
+    margin: 4px 0 2px;
+    break-after: avoid;
   }
 
-  .sheet-rsi-checklist { break-inside: avoid; margin-bottom: 10px; }
-  .sheet-rsi-checklist__title {
-    font-size: 12px;
+  /* ---- RSI Checklist (3 columns, compact) ---- */
+  body.is-printing .sheet-rsi-checklist {
+    break-inside: avoid;
+    margin-bottom: 5px;
+  }
+  body.is-printing .sheet-rsi-checklist__title {
+    font-size: 10px;
     font-weight: 700;
     color: #b85;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin: 0 0 4px;
+    letter-spacing: 0.04em;
+    margin: 0 0 2px;
   }
-  .sheet-rsi-checklist__grid {
+  body.is-printing .sheet-rsi-checklist__grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1px 16px;
-    font-size: 9.5px;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px 8px;
+    font-size: 7.5px;
   }
-  .sheet-rsi-checklist__item {
+  body.is-printing .sheet-rsi-checklist__item {
     display: flex;
     align-items: center;
-    gap: 4px;
-    padding: 1px 0;
+    gap: 2px;
+    padding: 0;
   }
-  .sheet-rsi-checklist__box { font-size: 11px; }
+  body.is-printing .sheet-rsi-checklist__box { font-size: 8px; }
 
-  .sheet-category { break-inside: avoid; margin-bottom: 8px; }
-  .sheet-category h3 {
-    font-size: 10.5px;
+  /* ---- Category ---- */
+  body.is-printing .sheet-category {
+    break-inside: avoid;
+    margin-bottom: 5px;
+  }
+  body.is-printing .sheet-category h3 {
+    font-size: 9px;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     color: #555;
     border-bottom: 1px solid #ccc;
     padding-bottom: 1px;
-    margin: 4px 0 4px;
+    margin: 3px 0 2px;
+    break-after: avoid;
   }
-  .sheet-drug { break-inside: avoid; margin-bottom: 5px; }
-  .sheet-drug__name {
-    font-size: 11.5px;
+
+  /* ---- Drug ---- */
+  body.is-printing .sheet-drug {
+    break-inside: avoid;
+    margin-bottom: 3px;
+  }
+  body.is-printing .sheet-drug__name {
+    font-size: 10px;
     margin: 0 0 1px;
     font-weight: 700;
   }
-  .sheet-drug__range { font-weight: 400; color: #555; }
-  .sheet-drug__row { display: flex; justify-content: space-between; font-size: 10.5px; font-family: var(--font-mono); }
-  .sheet-drug__row .dl-label,
-  .sheet-drug__row .dl-simple { color: #222 !important; }
-  .sheet-drug__obs { font-size: 9.5px; color: #444; }
-  .sheet-footer {
+  body.is-printing .sheet-drug__range { font-weight: 400; color: #555; font-size: 8.5px; }
+  body.is-printing .sheet-drug__row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    font-family: "Cascadia Code", "Roboto Mono", Consolas, monospace;
+  }
+  body.is-printing .sheet-drug__row .dl-label,
+  body.is-printing .sheet-drug__row .dl-simple { color: #222 !important; }
+  body.is-printing .sheet-drug__obs { font-size: 8px; color: #555; }
+
+  /* ---- Footer ---- */
+  body.is-printing .sheet-footer {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    font-size: 9px;
+    font-size: 7px;
     color: #777;
-    margin-top: 10px;
+    margin-top: 6px;
     border-top: 1px solid #ccc;
-    padding-top: 6px;
+    padding-top: 4px;
   }
-  .sheet-footer__note { flex: 1; }
-  .sheet-footer__qr { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-  .sheet-qr-img { display: block; border: none; }
-  .sheet-qr-label { font-size: 7px; color: #999; }
+  body.is-printing .sheet-footer__note { flex: 1; }
+  body.is-printing .sheet-footer__qr { display: flex; flex-direction: column; align-items: center; gap: 1px; }
+  body.is-printing .sheet-qr-img { display: block; border: none; width: 60px; height: 60px; }
+  body.is-printing .sheet-qr-label { font-size: 5.5px; color: #999; }
 }

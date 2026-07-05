@@ -123,8 +123,17 @@
   /** Renderiza a lista completa de drogas, agrupada por super-categoria. */
   function renderDrugList(patient, selectedIds, institution) {
     const el = document.getElementById('drug-list');
+    // Clean up any lingering "no results" message from search
+    const noRes = document.getElementById('search-no-results');
+    if (noRes) noRes.style.display = 'none';
+
     if (!patient.weight || patient.weight <= 0) {
-      el.innerHTML = '<p class="drug-list__empty">Informe o peso do paciente para ver os cálculos.</p>';
+      el.innerHTML = `<div class="drug-list__empty">
+        <span class="drug-list__empty-icon">⚖️</span>
+        <strong>Digite o peso do paciente</strong>
+        Use os presets rápidos (60–100 kg) ou o stepper para ajustar.<br>
+        Os cálculos de diluição aparecerão automaticamente.
+      </div>`;
       return;
     }
 
@@ -161,9 +170,20 @@
 
   function renderSelectedCount(selectedIds) {
     const el = document.getElementById('selected-count');
-    el.textContent = `${selectedIds.length} selecionada${selectedIds.length === 1 ? '' : 's'}`;
+    const count = selectedIds.length;
+    const prevCount = parseInt(el.getAttribute('data-count') || '0', 10);
+    el.textContent = `${count} selecionada${count === 1 ? '' : 's'}`;
+    el.setAttribute('data-count', count);
+
+    if (count !== prevCount) {
+      el.style.transform = 'scale(1.15)';
+      el.style.transition = 'transform 0.15s ease';
+      setTimeout(function () { el.style.transform = 'scale(1)'; }, 150);
+    }
+
     const btn = document.getElementById('btn-print-selected');
-    btn.disabled = selectedIds.length === 0;
+    btn.disabled = count === 0;
+    btn.title = count === 0 ? 'Marque drogas primeiro usando o botão +' : 'Imprimir ' + count + ' droga' + (count === 1 ? '' : 's') + ' selecionada' + (count === 1 ? '' : 's');
   }
 
   AMLS.render = { escapeHTML, categoryIcon, renderVMStrip, renderDrugList, renderSelectedCount, drugCardHTML, dilutionPrepHTML };
