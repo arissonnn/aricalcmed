@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drogas UTI/PS — Calculadora</title>
+<meta name="description" content="Calculadora automática de drogas para CTI, Pronto-Socorro e Anestesia.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header id="app-header">
+    <div class="header-title">
+      <span class="header-mark">Rx</span>
+      <h1>Drogas <span>UTI/PS</span></h1>
+    </div>
+    <button id="btn-reset" class="btn btn--ghost">Novo Paciente</button>
+  </header>
+
+  <div id="vm-strip" class="vm-strip vm-strip--empty"></div>
+
+  <main id="app-main">
+    <aside id="patient-panel">
+      <h2 class="panel-title">Dados do Paciente</h2>
+
+      <div class="field">
+        <label for="input-name">Nome <span class="optional-badge">opcional</span></label>
+        <input type="text" id="input-name" placeholder="Não é salvo entre sessões" autocomplete="off">
+      </div>
+
+      <div class="field-row">
+        <div class="field field--required">
+          <label for="input-weight">Peso (kg) <span class="required-badge">obrigatório</span></label>
+          <div class="stepper">
+            <button data-stepper="-1" data-target="input-weight" aria-label="Diminuir peso">−</button>
+            <input type="number" id="input-weight" min="0" step="1" inputmode="decimal">
+            <button data-stepper="1" data-target="input-weight" aria-label="Aumentar peso">+</button>
+          </div>
+          <div class="presets">
+            <button data-preset-weight="60">60</button>
+            <button data-preset-weight="70">70</button>
+            <button data-preset-weight="80">80</button>
+            <button data-preset-weight="90">90</button>
+            <button data-preset-weight="100">100</button>
+          </div>
+        </div>
+
+        <div class="field field--required">
+          <label for="input-height">Altura (cm) <span class="required-badge">obrigatório</span></label>
+          <div class="stepper">
+            <button data-stepper="-1" data-target="input-height" aria-label="Diminuir altura">−</button>
+            <input type="number" id="input-height" min="0" step="1" inputmode="decimal">
+            <button data-stepper="1" data-target="input-height" aria-label="Aumentar altura">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="field field--required">
+        <label>Sexo <span class="required-badge">obrigatório</span></label>
+        <div class="sex-toggle">
+          <button data-sex="male">Masculino</button>
+          <button data-sex="female">Feminino</button>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="input-age-years">Idade <span class="optional-badge">opcional</span></label>
+          <div class="age-inputs">
+            <input type="number" id="input-age-years" min="0" placeholder="anos">
+            <input type="number" id="input-age-months" min="0" max="11" placeholder="meses">
+          </div>
+        </div>
+        <div class="field">
+          <label for="input-dob">Data de nascimento <span class="optional-badge">opcional</span></label>
+          <input type="date" id="input-dob">
+        </div>
+      </div>
+
+      <p class="privacy-note">O nome do paciente não é salvo ao recarregar a página. Use <strong>Novo Paciente</strong> ao trocar de caso.</p>
+    </aside>
+
+    <section id="drug-panel">
+      <div id="print-toolbar">
+        <span id="selected-count">0 selecionadas</span>
+        <div class="print-toolbar__actions">
+          <button id="btn-print-selected" class="btn btn--outline" disabled>Imprimir Selecionadas</button>
+          <button id="btn-print-all" class="btn btn--primary">Imprimir Tudo</button>
+        </div>
+      </div>
+      <div id="drug-list"></div>
+    </section>
+  </main>
+
+  <div id="print-sheet" aria-hidden="true"></div>
+
+  <script src="js/database.js"></script>
+  <script src="js/calculations.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/print.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
