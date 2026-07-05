@@ -46,6 +46,35 @@ AMLS.CATEGORY_LABELS = {
   'other': 'Outras'
 };
 
+// ================ SUPER-CATEGORIAS ================
+// Agrupa categorias relacionadas sob um título de seção
+AMLS.SUPER_ORDER = ['vasoactive', 'sedation', 'rsi', 'acls', 'other'];
+
+AMLS.SUPER_LABELS = {
+  'vasoactive': 'Vasoativos',
+  'sedation': 'Sedação',
+  'rsi': 'Intubação (RSI)',
+  'acls': 'ACLS / Ressuscitação',
+  'other': 'Outras'
+};
+
+AMLS.SUPER_COLORS = {
+  'vasoactive': 'red',
+  'sedation': 'blue',
+  'rsi': 'amber',
+  'acls': 'red',
+  'other': 'teal'
+};
+
+// Mapeamento: super-categoria → lista de categorias filhas
+AMLS.SUPER_CATEGORIES = {
+  'vasoactive': ['vasopressor', 'inotrope'],
+  'sedation': ['continuous-sedation', 'sedative'],
+  'rsi': ['rsi-induction', 'rsi-blocker', 'continuous-blocker'],
+  'acls': ['acls'],
+  'other': ['other']
+};
+
 // Famílias de cor por categoria (usadas na borda lateral dos cards)
 AMLS.CATEGORY_COLOR = {
   'vasopressor': 'red',

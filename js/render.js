@@ -105,7 +105,7 @@
           </button>
           <div class="drug-card__title">
             <span class="drug-card__icon">${categoryIcon(result.category)}</span>
-            <h3>${escapeHTML(result.drugName)}</h3>
+            <h4>${escapeHTML(result.drugName)}</h4>
           </div>
           <span class="drug-card__range">${escapeHTML(result.safeRangeLabel)}</span>
         </header>
@@ -119,7 +119,7 @@
     `;
   }
 
-  /** Renderiza a lista completa de drogas, agrupada por categoria. */
+  /** Renderiza a lista completa de drogas, agrupada por super-categoria. */
   function renderDrugList(patient, selectedIds, institution) {
     const el = document.getElementById('drug-list');
     if (!patient.weight || patient.weight <= 0) {
@@ -135,14 +135,25 @@
     });
 
     let html = '';
-    AMLS.CATEGORY_ORDER.forEach(cat => {
-      if (!byCategory[cat]) return;
-      html += `<section class="category-block">
-        <h2 class="category-title">${AMLS.CATEGORY_LABELS[cat]}</h2>
-        <div class="category-grid">
-          ${byCategory[cat].map(r => drugCardHTML(r, selectedIds.includes(r.drugId))).join('')}
-        </div>
-      </section>`;
+    AMLS.SUPER_ORDER.forEach(superId => {
+      const catIds = AMLS.SUPER_CATEGORIES[superId];
+      const hasAny = catIds.some(c => byCategory[c] && byCategory[c].length);
+      if (!hasAny) return;
+
+      html += `<section class="super-block super-${superId}">
+        <h2 class="super-title">${AMLS.SUPER_LABELS[superId]}</h2>`;
+
+      catIds.forEach(cat => {
+        if (!byCategory[cat] || !byCategory[cat].length) return;
+        html += `<section class="category-block">
+          <h3 class="category-title">${AMLS.CATEGORY_LABELS[cat]}</h3>
+          <div class="category-grid">
+            ${byCategory[cat].map(r => drugCardHTML(r, selectedIds.includes(r.drugId))).join('')}
+          </div>
+        </section>`;
+      });
+
+      html += `</section>`;
     });
     el.innerHTML = html;
   }
