@@ -405,6 +405,8 @@ input:focus-visible, button:focus-visible {
   .sheet-drug__name { font-size: 11.5px; font-weight: 700; }
   .sheet-drug__range { font-weight: 400; color: #555; }
   .sheet-drug__row { display: flex; justify-content: space-between; font-size: 10.5px; font-family: var(--font-mono); }
+  .sheet-drug__row .dl-label,
+  .sheet-drug__row .dl-simple { color: #222 !important; }
   .sheet-drug__obs { font-size: 9.5px; color: #444; }
   .sheet-footer {
     display: flex;
