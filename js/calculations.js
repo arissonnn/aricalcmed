@@ -27,8 +27,10 @@
       pbw,
       vt6: pbw * 6,
       vt8: pbw * 8,
+      frMin: 12, frMax: 20,
       fr: pbw >= 70 ? 14 : 18,
-      peep: 5
+      peep: 5,
+      pipMin: 15, pipMax: 30
     };
   }
 

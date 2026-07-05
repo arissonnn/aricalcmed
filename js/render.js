@@ -35,7 +35,8 @@
       <div class="vm-item"><span class="vm-label">PBW</span><span class="vm-value">${c.formatBR(vm.pbw, 1)} kg</span></div>
       <div class="vm-item"><span class="vm-label">VT 6mL/kg</span><span class="vm-value">${c.formatBR(vm.vt6, 0)} mL</span></div>
       <div class="vm-item"><span class="vm-label">VT 8mL/kg</span><span class="vm-value">${c.formatBR(vm.vt8, 0)} mL</span></div>
-      <div class="vm-item"><span class="vm-label">FR inicial</span><span class="vm-value">${vm.fr} irpm</span></div>
+      <div class="vm-item"><span class="vm-label">FR alvo</span><span class="vm-value">${vm.frMin}–${vm.frMax} irpm</span></div>
+      <div class="vm-item"><span class="vm-label">PIP</span><span class="vm-value">${vm.pipMin}–${vm.pipMax} cmH₂O</span></div>
       <div class="vm-item"><span class="vm-label">PEEP</span><span class="vm-value">${vm.peep} cmH₂O</span></div>
     `;
   }
@@ -145,7 +146,7 @@
 
       catIds.forEach(cat => {
         if (!byCategory[cat] || !byCategory[cat].length) return;
-        html += `<section class="category-block">
+        html += `<section class="category-block" data-cat="${cat}">
           <h3 class="category-title">${AMLS.CATEGORY_LABELS[cat]}</h3>
           <div class="category-grid">
             ${byCategory[cat].map(r => drugCardHTML(r, selectedIds.includes(r.drugId))).join('')}

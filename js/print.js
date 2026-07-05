@@ -23,7 +23,8 @@
           PBW ${c.formatBR(vm.pbw, 1)}kg ·
           VT6 ${c.formatBR(vm.vt6, 0)}mL ·
           VT8 ${c.formatBR(vm.vt8, 0)}mL ·
-          FR ${vm.fr}irpm ·
+          FR ${vm.frMin}–${vm.frMax}irpm ·
+          PIP ${vm.pipMin}–${vm.pipMax}cmH₂O ·
           PEEP ${vm.peep}cmH₂O
         </div>`;
     }
