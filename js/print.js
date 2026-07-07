@@ -78,7 +78,7 @@
             const prepHTML = AMLS.render.dilutionPrepHTML(d, r.ampoule);
             return '<div class="sheet-drug__row"><span>' + prepHTML + '</span><span class="sheet-drug__rate">' + (d.rateLabel ? AMLS.render.escapeHTML(d.rateLabel) : '') + '</span></div>';
           }).join('');
-          html += '<div class="sheet-drug"><h4 class="sheet-drug__name">' + AMLS.render.escapeHTML(r.drugName) + ' <span class="sheet-drug__range">(' + AMLS.render.escapeHTML(r.safeRangeLabel) + ')</span></h4>' + rows + '<div class="sheet-drug__obs">' + AMLS.render.escapeHTML(r.observations) + '</div></div>';
+          html += '<div class="sheet-drug"><h4 class="sheet-drug__name">' + AMLS.render.escapeHTML(r.drugName) + '</h4><div class="sheet-drug__range">' + AMLS.render.escapeHTML(r.safeRangeLabel) + '</div>' + rows + '<div class="sheet-drug__obs">' + AMLS.render.escapeHTML(r.observations) + '</div></div>';
         });
         html += '</div>';
       });

@@ -713,10 +713,10 @@ input:focus-visible, button:focus-visible {
 
 .drug-card__header {
   display: grid;
-  grid-template-columns: 28px 1fr auto;
+  grid-template-columns: 28px 1fr;
   gap: 8px;
   align-items: center;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 .drug-card__mark {
   width: 28px; height: 28px;
@@ -739,15 +739,29 @@ input:focus-visible, button:focus-visible {
 .drug-card__icon { font-size: 11px; opacity: 0.65; flex-shrink: 0; }
 .drug-card__range {
   font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
   white-space: nowrap;
   background: var(--surface-alt);
-  padding: 2px 8px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  align-self: center;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border-left: 4px solid var(--accent);
+  margin: 0 0 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
+/* Range category color matching */
+.drug-card.cat-vasopressor .drug-card__range,
+.drug-card.cat-inotrope .drug-card__range,
+.drug-card.cat-acls .drug-card__range { border-left-color: var(--cat-red); }
+.drug-card.cat-continuous-sedation .drug-card__range,
+.drug-card.cat-sedative .drug-card__range { border-left-color: var(--cat-blue); }
+.drug-card.cat-rsi-induction .drug-card__range,
+.drug-card.cat-rsi-blocker .drug-card__range,
+.drug-card.cat-continuous-blocker .drug-card__range { border-left-color: var(--cat-amber); }
+.drug-card.cat-other .drug-card__range { border-left-color: var(--cat-teal); }
 .drug-card__commercial {
   font-size: 10.5px;
   color: var(--text-muted);
@@ -765,9 +779,10 @@ input:focus-visible, button:focus-visible {
   font-family: var(--font-mono);
   text-align: right;
   font-weight: 700;
+  font-size: 14px;
   white-space: nowrap;
   vertical-align: middle;
-  padding-left: 10px;
+  padding-left: 12px;
   color: var(--accent);
 }
 .dl-extra td { font-size: 10.5px; color: var(--cat-teal); padding-top: 0; opacity: 0.85; }
@@ -818,7 +833,7 @@ input:focus-visible, button:focus-visible {
   .category-grid { grid-template-columns: 1fr; }
   .print-toolbar__actions { width: 100%; }
   .print-toolbar__actions .btn { flex: 1; text-align: center; }
-  .drug-card__range { display: none; }
+  .drug-card__range { font-size: 12px; padding: 4px 10px; }
   .drug-card__mark { width: 32px; height: 32px; font-size: 16px; }
   .stepper--s button { width: 30px; height: 30px; font-size: 15px; }
   .stepper--s input { width: 44px; font-size: 14px; }
@@ -986,6 +1001,7 @@ body.theme-light .header-top {
 body.theme-light .header-title h1 { color: var(--text); }
 body.theme-light .drug-card { background: var(--surface); border-color: var(--border); }
 body.theme-light .drug-card__obs { color: var(--text-muted); }
+body.theme-light .drug-card__range { background: var(--surface-alt); color: var(--text); }
 body.theme-light .vm-strip { background: var(--surface-alt); }
 body.theme-light .vm-strip .vm-label { color: var(--text-muted); }
 body.theme-light .vm-strip .vm-value { color: var(--text); }
@@ -1164,12 +1180,25 @@ body.theme-light .drug-list__empty { color: var(--text-muted); }
     margin: 0 0 1px;
     font-weight: 700;
   }
-  body.is-printing .sheet-drug__range { font-weight: 400; color: #555; font-size: 8.5px; }
+  body.is-printing .sheet-drug__range {
+    font-weight: 700;
+    color: #111;
+    font-size: 11px;
+    background: #f0f0f0;
+    padding: 3px 6px;
+    border-left: 3px solid #999;
+    margin-bottom: 2px;
+  }
   body.is-printing .sheet-drug__row {
     display: flex;
     justify-content: space-between;
     font-size: 9px;
     font-family: "Cascadia Code", "Roboto Mono", Consolas, monospace;
+  }
+  body.is-printing .sheet-drug__row .sheet-drug__rate {
+    font-weight: 700;
+    font-size: 10px;
+    color: #111;
   }
   body.is-printing .sheet-drug__row .dl-label,
   body.is-printing .sheet-drug__row .dl-simple { color: #222 !important; }

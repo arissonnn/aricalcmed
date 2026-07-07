@@ -2,7 +2,7 @@
  * sw.js — Service Worker
  * Cache-first para funcionar offline.
  */
-const CACHE = 'drogas-uti-v2';
+const CACHE = 'drogas-uti-v3';
 
 self.addEventListener('install', e => {
   e.waitUntil(

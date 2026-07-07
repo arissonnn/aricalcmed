@@ -144,8 +144,8 @@
             <span class="drug-card__icon">${categoryIcon(result.category)}</span>
             <h4>${displayName}</h4>
           </div>
-          <span class="drug-card__range">${escapeHTML(result.safeRangeLabel)}</span>
         </header>
+        <div class="drug-card__range">${escapeHTML(result.safeRangeLabel)}</div>
         ${result.commercialNames && result.commercialNames.length
           ? `<div class="drug-card__commercial">${escapeHTML(result.commercialNames.join(' · '))}</div>` : ''}
         ${!isTextOnly ? `<table class="drug-card__table"><tbody>${rows}</tbody></table>` : ''}
