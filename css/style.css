@@ -956,9 +956,12 @@ input:focus-visible, button:focus-visible {
   }
   body.is-printing .sheet-rsi-checklist__box { font-size: 8px; }
 
-  /* ---- Category ---- */
+  /* ---- Category ----
+     NÃO usar break-inside: avoid aqui: categorias com muitas drogas ficam
+     mais altas que uma coluna/página e o browser empurra o bloco inteiro
+     para a próxima página, deixando a primeira página em branco.
+     O título (h3) tem break-after: avoid abaixo para não órfar. */
   body.is-printing .sheet-category {
-    break-inside: avoid;
     margin-bottom: 5px;
   }
   body.is-printing .sheet-category h3 {
@@ -1003,6 +1006,8 @@ input:focus-visible, button:focus-visible {
     margin-top: 6px;
     border-top: 1px solid #ccc;
     padding-top: 4px;
+    break-inside: avoid;
+    break-before: avoid;
   }
   body.is-printing .sheet-footer__note { flex: 1; }
   body.is-printing .sheet-footer__qr { display: flex; flex-direction: column; align-items: center; gap: 1px; }
