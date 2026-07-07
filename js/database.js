@@ -9,7 +9,7 @@
  *
  * calcMode, rateBasis: veja constants.js para definicoes.
  */
-const AMLS = window.AMLS = window.AMLS || {};
+// AMLS já declarado em constants.js (escopo global) — não redeclarar com const
 var isFile = window.location && window.location.protocol === 'file:';
 
 function fireReady() { document.dispatchEvent(new Event('amls-ready')); }
