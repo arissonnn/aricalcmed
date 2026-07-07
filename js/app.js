@@ -34,6 +34,18 @@
     return available.map(d => AMLS.calc.computeDrugResult(d, state, state.institution));
   }
 
+  /** Coleta doses de titulação digitadas nos inputs do DOM → { drugId: dose }. */
+  function collectTitrationDoses() {
+    const doses = {};
+    document.querySelectorAll('.drug-card__titration-input').forEach(function(input) {
+      const val = input.value.trim();
+      if (!val) return;
+      const dose = parseFloat(val.replace(',', '.'));
+      if (!isNaN(dose) && dose > 0) doses[input.dataset.drugId] = dose;
+    });
+    return doses;
+  }
+
   function renderAll() {
     AMLS.render.renderVMStrip(getVM());
     AMLS.render.renderDrugList(state, state.selectedIds, state.institution, state.searchQuery);
@@ -209,12 +221,12 @@
     });
 
     document.getElementById('btn-print-all').addEventListener('click', () => {
-      AMLS.print.printSheet(state, getVM(), getAllResults(), null);
+      AMLS.print.printSheet(state, getVM(), getAllResults(), null, collectTitrationDoses());
     });
 
     document.getElementById('btn-print-selected').addEventListener('click', () => {
       if (state.selectedIds.length === 0) return;
-      AMLS.print.printSheet(state, getVM(), getAllResults(), state.selectedIds);
+      AMLS.print.printSheet(state, getVM(), getAllResults(), state.selectedIds, collectTitrationDoses());
     });
 
     // ================ SEARCH / FILTER ================

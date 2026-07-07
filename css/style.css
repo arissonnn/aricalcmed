@@ -1197,6 +1197,8 @@ body.theme-light .drug-list__empty { color: var(--text-muted); }
     color: #222;
     font-size: 10px;
     margin-left: 3px;
+    border: 1px solid #999;
+    padding: 0 3px;
   }
   body.is-printing .sheet-drug__row {
     display: flex;
@@ -1213,10 +1215,21 @@ body.theme-light .drug-list__empty { color: var(--text-muted); }
     white-space: nowrap;
     flex-shrink: 0;
     align-self: center;
+    border: 1px solid #aaa;
+    padding: 0 3px;
   }
   body.is-printing .sheet-drug__row .dl-label,
   body.is-printing .sheet-drug__row .dl-simple { color: #222 !important; }
   body.is-printing .sheet-drug__obs { font-size: 8px; color: #555; }
+  body.is-printing .sheet-drug__titration {
+    font-size: 8.5px;
+    margin-top: 2px;
+    margin-bottom: 1px;
+    padding: 1px 4px;
+    border-left: 2px solid #555;
+    color: #333;
+  }
+  body.is-printing .sheet-drug__titration strong { color: #111; }
 
   /* ---- Footer ---- */
   body.is-printing .sheet-footer {

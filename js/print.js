@@ -78,7 +78,18 @@
             const prepHTML = AMLS.render.dilutionPrepHTML(d, r.ampoule);
             return '<div class="sheet-drug__row"><span>' + prepHTML + '</span><span class="sheet-drug__rate">' + (d.rateLabel ? AMLS.render.escapeHTML(d.rateLabel) : '') + '</span></div>';
           }).join('');
-          html += '<div class="sheet-drug"><h4 class="sheet-drug__name">' + AMLS.render.escapeHTML(r.drugName) + ' <span class="sheet-drug__range">' + AMLS.render.escapeHTML(r.safeRangeLabel) + '</span></h4>' + rows + '<div class="sheet-drug__obs">' + AMLS.render.escapeHTML(r.observations) + '</div></div>';
+
+          let titrationHTML = '';
+          if (r.titrationDose != null && r.titrationRates) {
+            const doseStr = String(r.titrationDose).replace('.', ',');
+            const rates = r.titrationRates.filter(tr => tr.rate != null);
+            if (rates.length > 0) {
+              const rateStrs = rates.map(tr => tr.rate.toFixed(1).replace('.', ',') + ' ' + tr.unit).join(' | ');
+              titrationHTML = '<div class="sheet-drug__titration">Dose alvo: <strong>' + AMLS.render.escapeHTML(doseStr + ' ' + r.titrationUnit) + '</strong> → <strong>' + AMLS.render.escapeHTML(rateStrs) + '</strong></div>';
+            }
+          }
+
+          html += '<div class="sheet-drug"><h4 class="sheet-drug__name">' + AMLS.render.escapeHTML(r.drugName) + ' <span class="sheet-drug__range">' + AMLS.render.escapeHTML(r.safeRangeLabel) + '</span></h4>' + rows + titrationHTML + '<div class="sheet-drug__obs">' + AMLS.render.escapeHTML(r.observations) + '</div></div>';
         });
         html += '</div>';
       });
@@ -100,9 +111,23 @@
    * @param {Array} allResults - resultados computados de TODAS as drogas
    * @param {Array<string>} selectedIds - ids marcados; se null, imprime tudo
    */
-  function printSheet(patient, vm, allResults, selectedIds) {
+  function printSheet(patient, vm, allResults, selectedIds, titrationDoses) {
     const isSelection = Array.isArray(selectedIds);
     const filtered = isSelection ? allResults.filter(r => selectedIds.includes(r.drugId)) : allResults;
+
+    // Pre-compute titration data for each drug that has a target dose
+    if (titrationDoses) {
+      filtered.forEach(function(r) {
+        const dose = titrationDoses[r.drugId];
+        if (dose == null) return;
+        const drug = AMLS.DRUGS.find(function(d) { return d.id === r.drugId; });
+        if (!drug) return;
+        r.titrationDose = dose;
+        r.titrationUnit = r.safeRangeLabel ? r.safeRangeLabel.replace(/^[\d,\u2013\u2014\s]+/, '').trim() : '';
+        r.titrationRates = AMLS.calc.computeExactRate(drug, dose, patient, patient.institution);
+      });
+    }
+
     const title = isSelection ? 'Folha de Drogas Selecionadas' : 'Folha Completa de Drogas — AMLS';
 
     const sheet = document.getElementById('print-sheet');
