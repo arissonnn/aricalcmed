@@ -875,61 +875,71 @@ select:invalid:not(:placeholder-shown) {
 
 /* ================ TITULAÇÃO FINA (DOSE ESPECÍFICA → mL/h) ================ */
 .drug-card__titration {
-  margin-top: 6px;
-  padding-top: 5px;
-  border-top: 1px dashed var(--border, #232A38);
+  margin-top: 8px;
+  padding: 8px 10px;
+  background: var(--surface-alt, #171C27);
+  border-radius: 8px;
+  border-left: 4px solid var(--accent, #E94560);
 }
 .drug-card__titration-header {
   display: flex;
   align-items: center;
-  gap: 6px;
-  margin-bottom: 4px;
+  gap: 8px;
+  margin-bottom: 6px;
 }
 .drug-card__titration-header label {
-  font-size: 9px;
-  color: var(--text-muted, #8B93A6);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text, #E7EAF0);
   text-transform: uppercase;
   letter-spacing: 0.04em;
   cursor: pointer;
 }
 .drug-card__titration-input {
-  width: 72px;
-  padding: 2px 6px;
-  font-size: 11px;
+  width: 80px;
+  padding: 4px 8px;
+  font-size: 14px;
+  font-weight: 700;
   font-family: var(--font-mono, "Cascadia Code", "Roboto Mono", Consolas, monospace);
-  background: var(--surface-alt, #171C27);
-  border: 1px solid var(--border, #232A38);
-  border-radius: 4px;
+  background: var(--surface, #0F131A);
+  border: 2px solid var(--border, #232A38);
+  border-radius: 6px;
   color: var(--text, #E7EAF0);
   text-align: center;
   outline: none;
-  transition: border-color 0.15s;
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
 .drug-card__titration-input:focus {
   border-color: var(--accent, #E94560);
+  box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.15);
 }
+.drug-card__titration-input::placeholder { color: var(--text-muted, #8B93A6); font-weight: 400; }
 .drug-card__titration .tt-unit {
-  font-size: 9px;
+  font-size: 11px;
+  font-weight: 600;
   color: var(--text-muted, #8B93A6);
 }
 .drug-card__titration-results {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
 }
 .drug-card__titration-row {
   display: flex;
   justify-content: space-between;
-  font-size: 9px;
+  align-items: center;
+  font-size: 11px;
   font-family: var(--font-mono, "Cascadia Code", "Roboto Mono", Consolas, monospace);
   color: var(--text-muted, #8B93A6);
+  padding: 2px 0;
 }
 .drug-card__titration-row .tt-rate {
   color: var(--accent, #E94560);
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 14px;
 }
 .drug-card__titration-row .tt-extra {
-  font-size: 8px;
+  font-size: 9px;
   color: var(--text-muted, #8B93A6);
   font-family: var(--font-ui, -apple-system, sans-serif);
   grid-column: 1 / -1;
@@ -1002,6 +1012,8 @@ body.theme-light .header-title h1 { color: var(--text); }
 body.theme-light .drug-card { background: var(--surface); border-color: var(--border); }
 body.theme-light .drug-card__obs { color: var(--text-muted); }
 body.theme-light .drug-card__range { background: var(--surface-alt); color: var(--text); }
+body.theme-light .drug-card__titration { background: var(--surface-alt); }
+body.theme-light .drug-card__titration-input { background: var(--surface); }
 body.theme-light .vm-strip { background: var(--surface-alt); }
 body.theme-light .vm-strip .vm-label { color: var(--text-muted); }
 body.theme-light .vm-strip .vm-value { color: var(--text); }
