@@ -27,7 +27,7 @@ AMLS.RSI_CHECKLIST = [
 
 AMLS.CATEGORY_ORDER = [
   'vasopressor', 'inotrope', 'continuous-sedation', 'sedative',
-  'rsi-induction', 'rsi-blocker', 'continuous-blocker', 'acls', 'other'
+  'rsi-premedication', 'rsi-induction', 'rsi-blocker', 'continuous-blocker', 'acls', 'other'
 ];
 
 AMLS.CATEGORY_LABELS = {
@@ -35,6 +35,7 @@ AMLS.CATEGORY_LABELS = {
   'inotrope': 'Inotrópicos',
   'continuous-sedation': 'Sedação Contínua (VM)',
   'sedative': 'Sedativos — Bolus',
+  'rsi-premedication': 'RSI — Pré-medicação',
   'rsi-induction': 'RSI — Indução',
   'rsi-blocker': 'RSI — Bloqueador Neuromuscular',
   'continuous-blocker': 'Bloqueador Neuromuscular (Contínuo)',
@@ -63,7 +64,7 @@ AMLS.SUPER_COLORS = {
 AMLS.SUPER_CATEGORIES = {
   'vasoactive': ['vasopressor', 'inotrope'],
   'sedation': ['continuous-sedation', 'sedative'],
-  'rsi': ['rsi-induction', 'rsi-blocker', 'continuous-blocker'],
+  'rsi': ['rsi-premedication', 'rsi-induction', 'rsi-blocker', 'continuous-blocker'],
   'acls': ['acls'],
   'other': ['other']
 };
@@ -74,6 +75,7 @@ AMLS.CATEGORY_COLOR = {
   'acls': 'red',
   'continuous-sedation': 'blue',
   'sedative': 'blue',
+  'rsi-premedication': 'amber',
   'rsi-induction': 'amber',
   'rsi-blocker': 'amber',
   'continuous-blocker': 'amber',

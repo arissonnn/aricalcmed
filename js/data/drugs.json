@@ -1897,5 +1897,342 @@
       }
     ],
     "observations": "Solução bastante hipotônica. ⚠️ Risco de hemólise se infundido rapidamente."
+  },
+  {
+    "id": "fentanil-rsi",
+    "name": "Fentanil (pré-medicação)",
+    "category": "rsi-premedication",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Fentanil (genérico)"
+    ],
+    "ampoule": {
+      "mcg": 250,
+      "mL": 5
+    },
+    "safeRange": {
+      "min": 1,
+      "max": 3,
+      "unit": "mcg/kg",
+      "notes": "1-3 min antes do indutor"
+    },
+    "calcMode": "weightBolus",
+    "dilutions": [
+      {
+        "label": "50 mcg/mL (ampola 250mcg/5mL)",
+        "conc": 50,
+        "concUnit": "mcg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "Opioide para atenuar resposta simpática à laringoscopia (administrar 1-3 min antes do indutor). ⚠️ Bradicardia, depressão respiratória, rigidez torácica (bolus rápido). Reduzir dose em idosos/hipotensos. Antídoto: naloxona."
+  },
+  {
+    "id": "lidocaina-rsi",
+    "name": "Lidocaína (pré-medicação)",
+    "category": "rsi-premedication",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Xilocaína 2% sem vasoconstrictor"
+    ],
+    "ampoule": {
+      "mg": 100,
+      "mL": 5
+    },
+    "safeRange": {
+      "min": 1,
+      "max": 1.5,
+      "unit": "mg/kg",
+      "notes": "2-3 min antes"
+    },
+    "calcMode": "weightBolus",
+    "dilutions": [
+      {
+        "label": "20 mg/mL 2% sem vasoconstrictor (ampola 100mg/5mL)",
+        "conc": 20,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "Atenua aumento da PIC e reflexo de tosse à laringoscopia (2-3 min antes). Evidência controversa. ⚠️ Toxicidade sistêmica (convulsões, arritmias) — não exceder 4,5 mg/kg total. Contraindicada em bloqueio AV, hipersensibilidade a amidas."
+  },
+  {
+    "id": "atropina-rsi",
+    "name": "Atropina (pré-medicação)",
+    "category": "rsi-premedication",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Atropina (genérico)"
+    ],
+    "ampoule": {
+      "mg": 0.5,
+      "mL": 1
+    },
+    "safeRange": {
+      "min": 0.01,
+      "max": 0.02,
+      "unit": "mg/kg",
+      "notes": "Dose mínima 0,1 mg"
+    },
+    "calcMode": "weightBolus",
+    "dilutions": [
+      {
+        "label": "0,5 mg/mL (ampola)",
+        "conc": 0.5,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "Previne bradicardia induzida por succinilcolina (especialmente pediátrico). Dose mínima 0,1 mg. ⚠️ Taquicardia, midríase, retenção urinária, xerostomia. Doses subterapêuticas podem causar bradicardia paradoxal."
+  },
+  {
+    "id": "vecuronio-defasc",
+    "name": "Vecurônio (defasciculante)",
+    "category": "rsi-premedication",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Norcuron"
+    ],
+    "ampoule": {
+      "mg": 10,
+      "mL": 10
+    },
+    "safeRange": {
+      "min": 0.01,
+      "max": 0.01,
+      "unit": "mg/kg",
+      "notes": "1/10 da dose intubatória"
+    },
+    "calcMode": "weightBolus",
+    "dilutions": [
+      {
+        "label": "1 mg/mL (reconstituído 10mg/10mL)",
+        "conc": 1,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "Dose defasciculante (1/10 da dose intubatória). Reduz fasciculações e mialgia pós-succinilcolina. Administrar 2-3 min antes. ⚠️ Só tem sentido se for usar succinilcolina depois."
+  },
+  {
+    "id": "esmolol",
+    "name": "Esmolol",
+    "category": "rsi-premedication",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Brevibloc"
+    ],
+    "ampoule": {
+      "mg": 100,
+      "mL": 10
+    },
+    "safeRange": {
+      "min": 1,
+      "max": 2,
+      "unit": "mg/kg"
+    },
+    "calcMode": "weightBolus",
+    "dilutions": [
+      {
+        "label": "10 mg/mL (ampola 100mg/10mL)",
+        "conc": 10,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "Beta-bloqueador ultrarrápido (duração ~9 min). Atenua resposta hipertensiva/taquicárdica à laringoscopia. Indicado em aneurisma dissecante, feocromocitoma, lesão cardíaca isquêmica. ⚠️ Hipotensão, bradicardia. Contraindicado em asma, BCO, bloqueio AV, IC descompensada."
+  },
+  {
+    "id": "propofol-rsi",
+    "name": "Propofol (indução RSI)",
+    "category": "rsi-induction",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Diprivan"
+    ],
+    "ampoule": {
+      "mg": 200,
+      "mL": 20
+    },
+    "safeRange": {
+      "min": 1,
+      "max": 3,
+      "unit": "mg/kg",
+      "notes": "Reduzir 30-50% em idosos/hipotensos"
+    },
+    "calcMode": "weightBolus",
+    "dilutions": [
+      {
+        "label": "10 mg/mL (frasco 200mg/20mL)",
+        "conc": 10,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "Início rápido (15-30s), duração curta (5-10min). ⚠️ Hipotensão marcante — evitar em instáveis. Reduzir 30-50% em idosos/hipotensos. Dor à injeção. Contraindicado em alergia a soja/ovo."
+  },
+  {
+    "id": "cetamina-rsi",
+    "name": "Cetamina (indução RSI)",
+    "category": "rsi-induction",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Ketamin S(+)",
+      "Ketalar"
+    ],
+    "ampoule": {
+      "mg": 500,
+      "mL": 10
+    },
+    "safeRange": {
+      "min": 1,
+      "max": 2,
+      "unit": "mg/kg"
+    },
+    "calcMode": "weightBolus",
+    "dilutions": [
+      {
+        "label": "50 mg/mL (frasco 500mg/10mL)",
+        "conc": 50,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "Dissociativo. Preserva pressão arterial (estimula simpático) — excelente em choque, asma, broncoespasmo. ⚠️ Aumenta secreções (pré-medicate com atropina). Emergência (alucinações) — considerar midazolam. Aumenta PIC (evidência recente questiona, mas cautela em TCE com hipertensão intracraniana)."
+  },
+  {
+    "id": "midazolam-rsi",
+    "name": "Midazolam (indução RSI)",
+    "category": "rsi-induction",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Dormonid"
+    ],
+    "ampoule": {
+      "mg": 15,
+      "mL": 3
+    },
+    "safeRange": {
+      "min": 0.2,
+      "max": 0.3,
+      "unit": "mg/kg"
+    },
+    "calcMode": "weightBolus",
+    "dilutions": [
+      {
+        "label": "5 mg/mL (ampola 15mg/3mL)",
+        "conc": 5,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "Benzodiazepínico. Menos usado para RSI (onset mais lento 2-3min, hipotensão). ⚠️ Sem efeito analgésico — sempre associar opioide. Hipotensão, depressão respiratória. Antagonista: flumazenil. Reduzir em idosos."
+  },
+  {
+    "id": "vecuronio",
+    "name": "Vecurônio",
+    "category": "rsi-blocker",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Norcuron"
+    ],
+    "ampoule": {
+      "mg": 10,
+      "mL": 10
+    },
+    "safeRange": {
+      "min": 0.1,
+      "max": 0.15,
+      "unit": "mg/kg"
+    },
+    "calcMode": "weightBolus",
+    "dilutions": [
+      {
+        "label": "1 mg/mL (reconstituído 10mg/10mL)",
+        "conc": 1,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "Não-despolarizante (aminosteroid). Onset mais lento (2-3 min) — menos ideal para RSI. Duração 30-60 min. Eliminação hepática/renal. ⚠️ Reduzir dose em hepatopatas/nefropatas. Reversão: neostigmina + atropina ou sugamadex."
+  },
+  {
+    "id": "pancuronio",
+    "name": "Pancurônio",
+    "category": "rsi-blocker",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Pavulon"
+    ],
+    "ampoule": {
+      "mg": 4,
+      "mL": 2
+    },
+    "safeRange": {
+      "min": 0.1,
+      "max": 0.1,
+      "unit": "mg/kg"
+    },
+    "calcMode": "weightBolus",
+    "dilutions": [
+      {
+        "label": "2 mg/mL (ampola 4mg/2mL)",
+        "conc": 2,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "Não-despolarizante longa duração (60-90 min). Raramente usado em RSI (onset lento 3-5 min). ⚠️ Taquicardia, hipertensão (estimula simpático). Eliminação renal. Contraindicado em arritmias, insuficiência renal."
+  },
+  {
+    "id": "sugamadex",
+    "name": "Sugamadex",
+    "category": "rsi-blocker",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Bridion"
+    ],
+    "ampoule": {
+      "mg": 200,
+      "mL": 2
+    },
+    "safeRange": {
+      "min": 2,
+      "max": 16,
+      "unit": "mg/kg",
+      "notes": "16 mg/kg reversão profunda; 2-4 mg/kg moderada"
+    },
+    "calcMode": "weightBolus",
+    "dilutions": [
+      {
+        "label": "100 mg/mL (frasco 200mg/2mL)",
+        "conc": 100,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "Reversor seletivo de rocurônio/vecurônio (encapsula a molécula). Dose 16 mg/kg para reversão profunda, 2-4 mg/kg para moderada. ⚠️ Bradicardia, anafilaxia. Custo elevado. Não reverte succinilcolina nem outros bloqueadores."
   }
 ]

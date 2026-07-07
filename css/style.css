@@ -708,7 +708,7 @@ input:focus-visible, button:focus-visible {
 }
 .drug-card.cat-vasopressor, .drug-card.cat-inotrope, .drug-card.cat-acls { border-left-color: var(--cat-red); }
 .drug-card.cat-continuous-sedation, .drug-card.cat-sedative { border-left-color: var(--cat-blue); }
-.drug-card.cat-rsi-induction, .drug-card.cat-rsi-blocker, .drug-card.cat-continuous-blocker { border-left-color: var(--cat-amber); }
+.drug-card.cat-rsi-premedication, .drug-card.cat-rsi-induction, .drug-card.cat-rsi-blocker, .drug-card.cat-continuous-blocker { border-left-color: var(--cat-amber); }
 .drug-card.cat-other { border-left-color: var(--cat-teal); }
 
 .drug-card__header {
@@ -758,6 +758,7 @@ input:focus-visible, button:focus-visible {
 .drug-card.cat-acls .drug-card__range { border-left-color: var(--cat-red); }
 .drug-card.cat-continuous-sedation .drug-card__range,
 .drug-card.cat-sedative .drug-card__range { border-left-color: var(--cat-blue); }
+.drug-card.cat-rsi-premedication .drug-card__range,
 .drug-card.cat-rsi-induction .drug-card__range,
 .drug-card.cat-rsi-blocker .drug-card__range,
 .drug-card.cat-continuous-blocker .drug-card__range { border-left-color: var(--cat-amber); }
