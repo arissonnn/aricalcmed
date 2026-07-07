@@ -841,6 +841,185 @@ input:focus-visible, button:focus-visible {
 /* ================ Print sheet (hidden on screen) ================ */
 #print-sheet { display: none; }
 
+/* ================ VALIDAÇÃO DE INPUTS ================ */
+.input--invalid,
+input:invalid:not(:placeholder-shown),
+select:invalid:not(:placeholder-shown) {
+  border-color: var(--cat-red, #E94560) !important;
+  box-shadow: 0 0 0 1px var(--cat-red, #E94560);
+}
+.validation-msg {
+  display: none;
+  color: var(--cat-red, #E94560);
+  font-size: 10px;
+  margin-top: 2px;
+}
+.input--invalid ~ .validation-msg {
+  display: block;
+}
+
+/* ================ TITULAÇÃO FINA (DOSE ESPECÍFICA → mL/h) ================ */
+.drug-card__titration {
+  margin-top: 6px;
+  padding-top: 5px;
+  border-top: 1px dashed var(--border, #232A38);
+}
+.drug-card__titration-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.drug-card__titration-header label {
+  font-size: 9px;
+  color: var(--text-muted, #8B93A6);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+.drug-card__titration-input {
+  width: 72px;
+  padding: 2px 6px;
+  font-size: 11px;
+  font-family: var(--font-mono, "Cascadia Code", "Roboto Mono", Consolas, monospace);
+  background: var(--surface-alt, #171C27);
+  border: 1px solid var(--border, #232A38);
+  border-radius: 4px;
+  color: var(--text, #E7EAF0);
+  text-align: center;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.drug-card__titration-input:focus {
+  border-color: var(--accent, #E94560);
+}
+.drug-card__titration .tt-unit {
+  font-size: 9px;
+  color: var(--text-muted, #8B93A6);
+}
+.drug-card__titration-results {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.drug-card__titration-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  font-family: var(--font-mono, "Cascadia Code", "Roboto Mono", Consolas, monospace);
+  color: var(--text-muted, #8B93A6);
+}
+.drug-card__titration-row .tt-rate {
+  color: var(--accent, #E94560);
+  font-weight: 600;
+}
+.drug-card__titration-row .tt-extra {
+  font-size: 8px;
+  color: var(--text-muted, #8B93A6);
+  font-family: var(--font-ui, -apple-system, sans-serif);
+  grid-column: 1 / -1;
+}
+/* Text-only drugs (fixedText) — não tem titulação */
+.drug-card__titration.is-hidden { display: none; }
+
+/* Titulação fina no PRINT */
+@media print {
+  body.is-printing .drug-card__titration { display: none !important; }
+}
+
+/* ================ SEARCH HIGHLIGHT ================ */
+.search-highlight {
+  background: rgba(233, 69, 96, 0.2);
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+/* ================ DRAWER FOCUS TRAP ================ */
+.drawer-overlay.is-open {
+  cursor: pointer;
+}
+/* quando o drawer está aberto, manter scroll trancado */
+body.no-scroll {
+  overflow: hidden;
+}
+
+/* ================ THEME TOGGLE (tema claro) ================ */
+.theme-btn {
+  background: none;
+  border: 1px solid var(--border, #232A38);
+  border-radius: 6px;
+  color: var(--text-muted, #8B93A6);
+  font-size: 16px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  line-height: 1;
+  padding: 0;
+}
+.theme-btn:hover {
+  background: var(--surface-alt, #171C27);
+  color: var(--text, #E7EAF0);
+  border-color: var(--text-muted, #8B93A6);
+}
+
+/* Tema claro — ativado com classe .theme-light no body */
+body.theme-light {
+  --bg: #F5F6FA;
+  --surface: #FFFFFF;
+  --surface-alt: #F0F1F5;
+  --border: #D0D4E0;
+  --text: #1A1D26;
+  --text-muted: #6B7280;
+  --accent: #CC2040;
+}
+body.theme-light .search-highlight {
+  background: rgba(204, 32, 64, 0.15);
+}
+body.theme-light .header-top {
+  background: var(--surface) !important;
+  border-bottom-color: var(--border) !important;
+}
+body.theme-light .header-title h1 { color: var(--text); }
+body.theme-light .drug-card { background: var(--surface); border-color: var(--border); }
+body.theme-light .drug-card__obs { color: var(--text-muted); }
+body.theme-light .vm-strip { background: var(--surface-alt); }
+body.theme-light .vm-strip .vm-label { color: var(--text-muted); }
+body.theme-light .vm-strip .vm-value { color: var(--text); }
+body.theme-light .drawer { background: var(--surface); }
+body.theme-light .drawer-header { border-bottom-color: var(--border); }
+body.theme-light .drawer-nav__super-btn { color: var(--text); }
+body.theme-light .drawer-nav__super-btn:hover { background: var(--surface-alt); }
+body.theme-light .drawer-nav__sub-btn { color: var(--text-muted); }
+body.theme-light .drawer-nav__sub-btn:hover { background: var(--surface-alt); color: var(--text); }
+body.theme-light .search-input { background: var(--surface-alt); border-color: var(--border); color: var(--text); }
+body.theme-light .search-input::placeholder { color: var(--text-muted); }
+body.theme-light .stepper button { background: var(--surface-alt); border-color: var(--border); color: var(--text); }
+body.theme-light .presets button { background: var(--surface-alt); border-color: var(--border); color: var(--text); }
+body.theme-light .btn--outline { border-color: var(--accent); color: var(--accent); }
+body.theme-light .btn--ghost { color: var(--text-muted); }
+body.theme-light .category-title { color: var(--text); }
+body.theme-light .header-patient input { background: var(--surface-alt); border-color: var(--border); color: var(--text); }
+body.theme-light .header-patient input::placeholder { color: var(--text-muted); }
+body.theme-light .sex-toggle button { background: var(--surface-alt); border-color: var(--border); color: var(--text-muted); }
+body.theme-light .sex-toggle button.is-active { background: var(--accent); color: #fff; border-color: var(--accent); }
+body.theme-light .hp-label { color: var(--text-muted); }
+body.theme-light .drug-card__table td { border-bottom-color: var(--border); }
+body.theme-light .jump-pill { background: var(--surface-alt); color: var(--text-muted); border-color: var(--border); }
+body.theme-light .jump-pill:hover { background: var(--border); color: var(--text); }
+body.theme-light .drug-card__ampoule { color: var(--text-muted); }
+body.theme-light .drug-list__empty { color: var(--text-muted); }
+
+/* ================ HEADER RIGHT (tema + reset) ================ */
+.header-top__right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 @media print {
   /* Global print adjustments — always apply */
   * {

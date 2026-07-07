@@ -15,7 +15,8 @@
     ageMonths: null,
     dob: '',
     institution: 'geral',
-    selectedIds: []
+    selectedIds: [],
+    searchQuery: ''
   };
 
   let state = { ...DEFAULT_STATE };
@@ -35,7 +36,7 @@
 
   function renderAll() {
     AMLS.render.renderVMStrip(getVM());
-    AMLS.render.renderDrugList(state, state.selectedIds, state.institution);
+    AMLS.render.renderDrugList(state, state.selectedIds, state.institution, state.searchQuery);
     AMLS.render.renderSelectedCount(state.selectedIds);
   }
 
@@ -132,6 +133,41 @@
       });
     });
 
+    // ================ VALIDAÇÃO DE INPUTS ================
+    function validateNumberInput(input, min, max, label) {
+      const val = parseFloat(input.value);
+      const msg = input.parentElement.querySelector('.validation-msg') || (function() {
+        const m = document.createElement('span');
+        m.className = 'validation-msg';
+        input.parentElement.appendChild(m);
+        return m;
+      })();
+
+      if (input.value.trim() === '') {
+        input.classList.remove('input--invalid');
+        msg.textContent = '';
+        return true;
+      }
+      if (isNaN(val) || val < min || val > max) {
+        input.classList.add('input--invalid');
+        msg.textContent = label + ' deve ser entre ' + min + ' e ' + max + '.';
+        return false;
+      }
+      input.classList.remove('input--invalid');
+      msg.textContent = '';
+      return true;
+    }
+
+    document.getElementById('input-weight').addEventListener('blur', function() {
+      validateNumberInput(this, 1, 400, 'Peso');
+    });
+    document.getElementById('input-height').addEventListener('blur', function() {
+      validateNumberInput(this, 20, 250, 'Altura');
+    });
+    document.getElementById('input-age-years').addEventListener('blur', function() {
+      validateNumberInput(this, 0, 130, 'Idade');
+    });
+
     document.querySelectorAll('[data-preset-weight]').forEach(btn => {
       btn.addEventListener('click', () => {
         document.getElementById('input-weight').value = btn.dataset.presetWeight;
@@ -157,7 +193,7 @@
       if (idx >= 0) state.selectedIds.splice(idx, 1);
       else state.selectedIds.push(id);
       persist();
-      AMLS.render.renderDrugList(state, state.selectedIds, state.institution);
+      AMLS.render.renderDrugList(state, state.selectedIds, state.institution, state.searchQuery);
       AMLS.render.renderSelectedCount(state.selectedIds);
     });
 
@@ -186,47 +222,45 @@
     document.getElementById('input-search').addEventListener('input', e => {
       clearTimeout(searchTimeout);
       searchTimeout = setTimeout(() => {
-        const query = e.target.value.trim().toLowerCase();
-        let visibleCount = 0;
-        const cards = document.querySelectorAll('.drug-card');
-        const superBlocks = document.querySelectorAll('.super-block');
-        const categoryBlocks = document.querySelectorAll('.category-block');
-
-        // Show/hide individual cards
-        cards.forEach(card => {
-          const name = (card.querySelector('h4')?.textContent || '').toLowerCase();
-          const commercial = (card.querySelector('.drug-card__commercial')?.textContent || '').toLowerCase();
-          const matches = !query || name.includes(query) || commercial.includes(query);
-          card.style.display = matches ? '' : 'none';
-          if (matches) visibleCount++;
-        });
-
-        // Show/hide category blocks and super blocks based on visible children
-        categoryBlocks.forEach(block => {
-          const visibleCards = block.querySelectorAll('.drug-card[style*="display: none"]');
-          const allCards = block.querySelectorAll('.drug-card');
-          block.style.display = visibleCards.length === allCards.length ? 'none' : '';
-        });
-        superBlocks.forEach(block => {
-          const visibleCats = block.querySelectorAll('.category-block:not([style*="display: none"])');
-          block.style.display = visibleCats.length === 0 ? 'none' : '';
-        });
-
-        // Show "no results" message
-        let noResultsEl = document.getElementById('search-no-results');
-        if (visibleCount === 0 && query) {
-          if (!noResultsEl) {
-            noResultsEl = document.createElement('p');
-            noResultsEl.id = 'search-no-results';
-            noResultsEl.className = 'search-no-results';
-            document.getElementById('drug-list').appendChild(noResultsEl);
-          }
-          noResultsEl.textContent = `Nenhuma droga encontrada para "${e.target.value.trim()}"`;
-          noResultsEl.style.display = '';
-        } else if (noResultsEl) {
-          noResultsEl.style.display = 'none';
-        }
+        state.searchQuery = e.target.value.trim();
+        renderAll();
       }, 150);
+    });
+
+    // ================ TITULAÇÃO FINA (DOSE ESPECÍFICA) ================
+    let titrationTimeout = null;
+    document.getElementById('drug-panel').addEventListener('input', function(e) {
+      const input = e.target.closest('.drug-card__titration-input');
+      if (!input) return;
+
+      clearTimeout(titrationTimeout);
+      titrationTimeout = setTimeout(function() {
+        const drugId = input.dataset.drugId;
+        const rawDose = input.value.replace(',', '.');
+        const dose = parseFloat(rawDose);
+        const resultsContainer = document.querySelector('.drug-card__titration-results[data-drug-id="' + drugId + '"]');
+        if (!resultsContainer) return;
+
+        if (isNaN(dose) || dose <= 0) {
+          resultsContainer.innerHTML = '';
+          return;
+        }
+
+        // Find the drug and compute exact rates
+        const drug = AMLS.DRUGS.find(d => d.id === drugId);
+        if (!drug) return;
+
+        const exactRates = AMLS.calc.computeExactRate(drug, dose, state, state.institution);
+        resultsContainer.innerHTML = exactRates.map(function(r) {
+          if (r.rate === null || r.rate === undefined) return '';
+          var rateStr = r.rate.toFixed(1).replace('.', ',');
+          var line = '<div class="drug-card__titration-row"><span>' + AMLS.render.escapeHTML(r.label) + '</span><span class="tt-rate">' + rateStr + ' ' + r.unit + '</span></div>';
+          if (r.extraNote) {
+            line += '<div class="drug-card__titration-row"><span class="tt-extra">' + AMLS.render.escapeHTML(r.extraNote) + '</span></div>';
+          }
+          return line;
+        }).filter(Boolean).join('');
+      }, 250);
     });
   }
 
@@ -321,13 +355,15 @@
       buildDrawerNav();
       drawer.classList.add('is-open');
       overlay.classList.add('is-open');
-      document.body.style.overflow = 'hidden';
+      document.body.classList.add('no-scroll');
+      // Focus trap: foco no close button
+      setTimeout(function() { closeBtn.focus(); }, 50);
     }
 
     function closeDrawer() {
       drawer.classList.remove('is-open');
       overlay.classList.remove('is-open');
-      document.body.style.overflow = '';
+      document.body.classList.remove('no-scroll');
     }
 
     toggle.addEventListener('click', openDrawer);
@@ -354,35 +390,40 @@
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape' && drawer.classList.contains('is-open')) closeDrawer();
     });
+
+    // Focus trap dentro do drawer
+    drawer.addEventListener('keydown', function(e) {
+      if (e.key !== 'Tab') return;
+      const focusable = drawer.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    });
   }
 
   // Atualiza destaque ativo no drawer conforme scroll
   function setupScrollSpy() {
     let ticking = false;
-    window.addEventListener('scroll', () => {
+    window.addEventListener('scroll', function() {
       if (!ticking) {
-        requestAnimationFrame(() => {
+        requestAnimationFrame(function() {
           const active = getActiveSuperId();
-          // Atualiza pills
-          document.querySelectorAll('.jump-pill').forEach(p => {
+          // Atualiza pills — não reconstrói o drawer inteiro
+          document.querySelectorAll('.jump-pill').forEach(function(p) {
             p.classList.toggle('is-active', p.dataset.target === active);
           });
-          // Atualiza drawer se estiver aberto (reconstrução leve)
-          const drawer = document.getElementById('drawer');
-          if (drawer.classList.contains('is-open')) {
-            buildDrawerNav();
-          }
           ticking = false;
         });
         ticking = true;
       }
     });
-  }
-
-  // Chamado após renderDrugList para rebuildar pills e drawer content
-  function rebuildNavigation() {
-    buildCategoryJump();
-    // se o drawer estiver aberto, rebuild na próxima abertura
   }
 
   function init() {
@@ -393,15 +434,39 @@
     bindInputs();
     setupDrawer();
     setupScrollSpy();
+    setupThemeToggle();
     renderAll();
   }
 
-  // Hook pós-render para rebuildar navegação
-  const origRenderDrugList = AMLS.render.renderDrugList;
-  AMLS.render.renderDrugList = function(patient, selectedIds, institution) {
-    origRenderDrugList(patient, selectedIds, institution);
-    rebuildNavigation();
-  };
+  function setupThemeToggle() {
+    const btn = document.createElement('button');
+    btn.className = 'theme-btn';
+    btn.id = 'btn-theme';
+    btn.setAttribute('aria-label', 'Alternar tema claro/escuro');
+    btn.textContent = '\u2600';
+    btn.title = 'Alternar tema claro/escuro';
+
+    const headerRight = document.querySelector('.header-top__right');
+    if (headerRight) {
+      headerRight.insertBefore(btn, headerRight.firstChild);
+    }
+
+    // Restaurar preferência salva
+    const saved = AMLS.storage.load();
+    if (saved && saved.lightTheme) {
+      document.body.classList.add('theme-light');
+      btn.textContent = '\u263E';
+    }
+
+    btn.addEventListener('click', function() {
+      const isLight = document.body.classList.toggle('theme-light');
+      btn.textContent = isLight ? '\u263E' : '\u2600';
+      // Persistir — recarregar estado e adicionar lightTheme
+      const st = AMLS.storage.load() || {};
+      st.lightTheme = isLight;
+      AMLS.storage.save(st);
+    });
+  }
 
   document.addEventListener('DOMContentLoaded', init);
 })();

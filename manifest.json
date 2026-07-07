@@ -1,0 +1,21 @@
+{
+  "name": "Drogas UTI/PS — Calculadora",
+  "short_name": "Drogas UTI",
+  "description": "Calculadora automática de drogas para CTI, Pronto-Socorro e Anestesia",
+  "start_url": "/aricalcmed/index.html",
+  "display": "standalone",
+  "background_color": "#0A0E14",
+  "theme_color": "#0A0E14",
+  "icons": [
+    {
+      "src": "qrcode.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "qrcode.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -14,7 +14,7 @@
 
   /** Peso Corporal Predito (PBW) para parâmetros de VM. */
   function computePBW(heightCm, sex) {
-    if (!heightCm || heightCm <= 0) return null;
+    if (heightCm == null || heightCm <= 0 || isNaN(heightCm)) return null;
     const base = sex === 'female' ? 45.5 : 50;
     return base + 0.91 * (heightCm - 152.4);
   }
@@ -57,7 +57,8 @@
    * Retorna { calcType, dilutionResults: [{label, rateLabel, ...}], observations, ... }
    */
   function computeDrugResult(drug, patient, institution) {
-    const weight = patient.weight;
+    let weight = patient.weight;
+    if (weight === null || weight === undefined || weight < 0 || isNaN(weight)) weight = 0;
     const { min, max } = drug.safeRange;
     const decimals = min < 1 ? 3 : 2;
     const safeRangeLabel = min === max
@@ -134,5 +135,63 @@
     };
   }
 
-  AMLS.calc = { formatBR, computePBW, computeVM, computeDrugResult, getActiveDilutions, getAvailableDrugs };
+  function computeExactRate(drug, dose, patient, institution) {
+    const weight = patient.weight;
+    const result = [];
+
+    const activeDilutions = getActiveDilutions(drug, institution);
+    activeDilutions.forEach(d => {
+      let rate = null, unit = '', extraNote = null;
+
+      switch (drug.calcMode) {
+        case 'weightContinuous': {
+          if (!weight || weight <= 0 || !d.conc) break;
+          const factor = drug.rateBasis === 'perMin' ? 60 : 1;
+          rate = (dose * weight * factor) / d.conc;
+          unit = 'mL/h';
+          break;
+        }
+        case 'weightBolus': {
+          if (!weight || weight <= 0 || !d.conc) break;
+          rate = (dose * weight) / d.conc;
+          unit = 'mL';
+          break;
+        }
+        case 'fixedRange': {
+          if (!d.conc) break;
+          if (drug.rateBasis === 'perMin') { rate = (dose * 60) / d.conc; unit = 'mL/h'; }
+          else if (drug.rateBasis === 'perHour') { rate = dose / d.conc; unit = 'mL/h'; }
+          else { rate = dose / d.conc; unit = 'mL'; }
+          break;
+        }
+        case 'directRate': {
+          if (!weight || weight <= 0) break;
+          rate = dose * weight;
+          unit = 'mL/h';
+          if (d.bagVolume && rate > 0) {
+            const hours = d.bagVolume / rate;
+            extraNote = 'Frasco de ' + d.bagVolume + 'mL dura ~' + formatBR(hours, 1) + 'h nessa taxa.';
+          }
+          break;
+        }
+        case 'fixedText':
+        default:
+          break;
+      }
+
+      result.push({
+        label: d.label,
+        rate: rate,
+        unit: unit,
+        prep: d.prep || null,
+        conc: d.conc,
+        concUnit: d.concUnit,
+        extraNote: extraNote
+      });
+    });
+
+    return result;
+  }
+
+  AMLS.calc = { formatBR, computePBW, computeVM, computeDrugResult, computeExactRate, getActiveDilutions, getAvailableDrugs };
 })();

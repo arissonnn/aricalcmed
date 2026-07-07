@@ -82,7 +82,28 @@
     return `<div class="drug-card__ampoule">💊 Ampola padrão: ${escapeHTML(parts.join(' / '))}</div>`;
   }
 
-  function drugCardHTML(result, isSelected) {
+  /**
+   * Agrupa resultados por categoria → super-categoria.
+   * Função compartilhada entre render.js e print.js.
+   * @param {Array} results — resultados de computeDrugResult
+   * @returns {Array} [{superId, superLabel, categories: [{id, label, results}]}]
+   */
+  function groupResultsBySuperCategory(results) {
+    const byCategory = {};
+    results.forEach(r => (byCategory[r.category] = byCategory[r.category] || []).push(r));
+    const groups = [];
+    AMLS.SUPER_ORDER.forEach(superId => {
+      const catIds = AMLS.SUPER_CATEGORIES[superId];
+      const categories = catIds
+        .map(cat => ({ id: cat, label: AMLS.CATEGORY_LABELS[cat], results: byCategory[cat] || [] }))
+        .filter(c => c.results.length > 0);
+      if (categories.length === 0) return;
+      groups.push({ superId, superLabel: AMLS.SUPER_LABELS[superId], categories });
+    });
+    return groups;
+  }
+
+  function drugCardHTML(result, isSelected, searchQuery) {
     const rows = result.dilutionResults.map(d => {
       const prepHTML = dilutionPrepHTML(d, result.ampoule);
       return `
@@ -97,6 +118,21 @@
 
     const isTextOnly = result.calcMode === 'fixedText';
 
+    // Search highlight
+    let displayName = escapeHTML(result.drugName);
+    if (searchQuery) {
+      const idx = displayName.toLowerCase().indexOf(searchQuery);
+      if (idx !== -1) {
+        const before = displayName.slice(0, idx);
+        const match = displayName.slice(idx, idx + searchQuery.length);
+        const after = displayName.slice(idx + searchQuery.length);
+        displayName = before + '<mark class="search-highlight">' + match + '</mark>' + after;
+      }
+    }
+
+    const hasTitration = !isTextOnly && !['fixedText'].includes(result.calcMode);
+    const unitShort = result.safeRangeLabel ? result.safeRangeLabel.replace(/^[\d,\u2013\s]+/, '') : '';
+
     return `
       <article class="drug-card cat-${result.category}" data-drug-id="${result.drugId}">
         <header class="drug-card__header">
@@ -106,13 +142,14 @@
           </button>
           <div class="drug-card__title">
             <span class="drug-card__icon">${categoryIcon(result.category)}</span>
-            <h4>${escapeHTML(result.drugName)}</h4>
+            <h4>${displayName}</h4>
           </div>
           <span class="drug-card__range">${escapeHTML(result.safeRangeLabel)}</span>
         </header>
         ${result.commercialNames && result.commercialNames.length
           ? `<div class="drug-card__commercial">${escapeHTML(result.commercialNames.join(' · '))}</div>` : ''}
         ${!isTextOnly ? `<table class="drug-card__table"><tbody>${rows}</tbody></table>` : ''}
+        ${hasTitration ? '<div class="drug-card__titration"><div class="drug-card__titration-header"><label>Dose alvo:</label><input type="text" class="drug-card__titration-input" data-drug-id="' + result.drugId + '" inputmode="decimal" placeholder="0,0" autocomplete="off" aria-label="Digite a dose desejada"><span class="tt-unit">' + escapeHTML(unitShort) + '</span></div><div class="drug-card__titration-results" data-drug-id="' + result.drugId + '"></div></div>' : ''}
         <p class="drug-card__obs">${escapeHTML(result.observations)}</p>
         ${result.dataNote ? `<p class="drug-card__datanote">⚠️ ${escapeHTML(result.dataNote)}</p>` : ''}
         ${result.ampoule ? formatAmpoule(result.ampoule) : ''}
@@ -121,50 +158,53 @@
   }
 
   /** Renderiza a lista completa de drogas, agrupada por super-categoria. */
-  function renderDrugList(patient, selectedIds, institution) {
+  function renderDrugList(patient, selectedIds, institution, searchQuery) {
     const el = document.getElementById('drug-list');
-    // Clean up any lingering "no results" message from search
+    // Clean up no results msg
     const noRes = document.getElementById('search-no-results');
     if (noRes) noRes.style.display = 'none';
 
     if (!patient.weight || patient.weight <= 0) {
-      el.innerHTML = `<div class="drug-list__empty">
-        <span class="drug-list__empty-icon">⚖️</span>
-        <strong>Digite o peso do paciente</strong>
-        Use os presets rápidos (60–100 kg) ou o stepper para ajustar.<br>
-        Os cálculos de diluição aparecerão automaticamente.
-      </div>`;
+      el.innerHTML = '<div class="drug-list__empty"><span class="drug-list__empty-icon">\u2696\uFE0F</span><strong>Digite o peso do paciente</strong>Use os presets r\u00E1pidos (60\u2013100 kg) ou o stepper para ajustar.<br>Os c\u00E1lculos de dilui\u00E7\u00E3o aparecer\u00E3o automaticamente.</div>';
       return;
     }
 
     const available = AMLS.calc.getAvailableDrugs(institution);
-    const byCategory = {};
-    available.forEach(drug => {
-      const result = AMLS.calc.computeDrugResult(drug, patient, institution);
-      (byCategory[drug.category] = byCategory[drug.category] || []).push(result);
-    });
+    const results = available.map(drug => AMLS.calc.computeDrugResult(drug, patient, institution));
+    const groups = groupResultsBySuperCategory(results);
 
+    const query = searchQuery ? searchQuery.trim().toLowerCase() : '';
     let html = '';
-    AMLS.SUPER_ORDER.forEach(superId => {
-      const catIds = AMLS.SUPER_CATEGORIES[superId];
-      const hasAny = catIds.some(c => byCategory[c] && byCategory[c].length);
-      if (!hasAny) return;
+    let hasAny = false;
 
-      html += `<section class="super-block super-${superId}">
-        <h2 class="super-title">${AMLS.SUPER_LABELS[superId]}</h2>`;
+    groups.forEach(group => {
+      let superHtml = '<section class="super-block super-' + group.superId + '"><h2 class="super-title">' + AMLS.SUPER_LABELS[group.superId] + '</h2>';
 
-      catIds.forEach(cat => {
-        if (!byCategory[cat] || !byCategory[cat].length) return;
-        html += `<section class="category-block" data-cat="${cat}">
-          <h3 class="category-title">${AMLS.CATEGORY_LABELS[cat]}</h3>
-          <div class="category-grid">
-            ${byCategory[cat].map(r => drugCardHTML(r, selectedIds.includes(r.drugId))).join('')}
-          </div>
-        </section>`;
+      group.categories.forEach(cat => {
+        let catHtml = '<section class="category-block" data-cat="' + cat.id + '"><h3 class="category-title">' + cat.label + '</h3><div class="category-grid">';
+
+        cat.results.forEach(r => {
+          if (query) {
+            const name = r.drugName.toLowerCase();
+            if (!name.includes(query)) return; // Filter by search query
+          }
+          catHtml += drugCardHTML(r, selectedIds.includes(r.drugId), query);
+          hasAny = true;
+        });
+
+        catHtml += '</div></section>';
+        // Only add category if it has visible children
+        if (catHtml.includes('drug-card')) superHtml += catHtml;
       });
 
-      html += `</section>`;
+      superHtml += '</section>';
+      if (superHtml.includes('drug-card')) html += superHtml;
     });
+
+    if (!hasAny) {
+      html = '<p class="search-no-results" id="search-no-results">Nenhuma droga encontrada para "' + escapeHTML(searchQuery) + '".</p>';
+    }
+
     el.innerHTML = html;
   }
 
@@ -186,5 +226,5 @@
     btn.title = count === 0 ? 'Marque drogas primeiro usando o botão +' : 'Imprimir ' + count + ' droga' + (count === 1 ? '' : 's') + ' selecionada' + (count === 1 ? '' : 's');
   }
 
-  AMLS.render = { escapeHTML, categoryIcon, renderVMStrip, renderDrugList, renderSelectedCount, drugCardHTML, dilutionPrepHTML };
+  AMLS.render = { escapeHTML, categoryIcon, renderVMStrip, renderDrugList, renderSelectedCount, drugCardHTML, dilutionPrepHTML, groupResultsBySuperCategory };
 })();

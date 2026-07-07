@@ -63,46 +63,33 @@
   }
 
   function buildDrugsHTML(results) {
-    const byCategory = {};
-    results.forEach(r => (byCategory[r.category] = byCategory[r.category] || []).push(r));
-
+    const groups = AMLS.render.groupResultsBySuperCategory(results);
     let html = '';
     let hasRSI = false;
-    AMLS.SUPER_ORDER.forEach(superId => {
-      const catIds = AMLS.SUPER_CATEGORIES[superId];
-      const hasAny = catIds.some(c => byCategory[c] && byCategory[c].length);
-      if (!hasAny) return;
-      if (superId === 'rsi') hasRSI = true;
 
-      html += `<div class="sheet-super">
-        <h2 class="sheet-super__title">${AMLS.SUPER_LABELS[superId]}</h2>`;
+    groups.forEach(group => {
+      if (group.superId === 'rsi') hasRSI = true;
+      html += '<div class="sheet-super"><h2 class="sheet-super__title">' + group.superLabel + '</h2>';
 
-      catIds.forEach(cat => {
-        if (!byCategory[cat] || !byCategory[cat].length) return;
-        html += `<div class="sheet-category">
-          <h3>${AMLS.CATEGORY_LABELS[cat]}</h3>`;
-        byCategory[cat].forEach(r => {
+      group.categories.forEach(cat => {
+        html += '<div class="sheet-category"><h3>' + cat.label + '</h3>';
+        cat.results.forEach(r => {
           const rows = r.dilutionResults.map(d => {
             const prepHTML = AMLS.render.dilutionPrepHTML(d, r.ampoule);
-            return `<div class="sheet-drug__row"><span>${prepHTML}</span><span class="sheet-drug__rate">${d.rateLabel ? AMLS.render.escapeHTML(d.rateLabel) : ''}</span></div>`;
+            return '<div class="sheet-drug__row"><span>' + prepHTML + '</span><span class="sheet-drug__rate">' + (d.rateLabel ? AMLS.render.escapeHTML(d.rateLabel) : '') + '</span></div>';
           }).join('');
-          html += `
-            <div class="sheet-drug">
-              <h4 class="sheet-drug__name">${AMLS.render.escapeHTML(r.drugName)} <span class="sheet-drug__range">(${AMLS.render.escapeHTML(r.safeRangeLabel)})</span></h4>
-              ${rows}
-              <div class="sheet-drug__obs">${AMLS.render.escapeHTML(r.observations)}</div>
-            </div>`;
+          html += '<div class="sheet-drug"><h4 class="sheet-drug__name">' + AMLS.render.escapeHTML(r.drugName) + ' <span class="sheet-drug__range">(' + AMLS.render.escapeHTML(r.safeRangeLabel) + ')</span></h4>' + rows + '<div class="sheet-drug__obs">' + AMLS.render.escapeHTML(r.observations) + '</div></div>';
         });
-        html += `</div>`;
+        html += '</div>';
       });
 
-      // Inserir checklist RSI após as drogas de RSI
-      if (superId === 'rsi') {
+      if (group.superId === 'rsi') {
         html += buildRSIChecklistHTML();
       }
 
-      html += `</div>`;
+      html += '</div>';
     });
+
     return html;
   }
 
