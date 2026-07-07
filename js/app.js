@@ -468,5 +468,14 @@
     });
   }
 
-  document.addEventListener('DOMContentLoaded', init);
+  function boot() {
+    // Aguarda dados carregados (database.js dispara 'amls-ready')
+    if (window.AMLS && AMLS.DRUGS) {
+      init();
+    } else {
+      document.addEventListener('amls-ready', init, { once: true });
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', boot);
 })();

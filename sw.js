@@ -16,6 +16,7 @@ self.addEventListener('install', e => {
       './js/render.js',
       './js/print.js',
       './js/app.js',
+      './js/data/drugs.json',
       './qrcode.png',
       './manifest.json'
     ]))

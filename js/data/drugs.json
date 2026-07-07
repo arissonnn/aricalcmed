@@ -1,21 +1,4 @@
-/**
- * database.js --- Carregador de dados dos farmacos
- * -------------------------------------------------
- * Fonte canonica: js/data/drugs.json (edite la!)
- *
- * Em servidor web: carrega o JSON via fetch.
- * Em file:// (HTML aberto direto): usa fallback inline.
- * Dispara evento 'amls-ready' em document quando dados estiverem prontos.
- *
- * calcMode, rateBasis: veja constants.js para definicoes.
- */
-const AMLS = window.AMLS = window.AMLS || {};
-var isFile = window.location && window.location.protocol === 'file:';
-
-function fireReady() { document.dispatchEvent(new Event('amls-ready')); }
-
-function loadFallback() {
-  AMLS.DRUGS = [
+[
   {
     "id": "noradrenalina",
     "name": "Noradrenalina",
@@ -1915,16 +1898,4 @@ function loadFallback() {
     ],
     "observations": "Solução bastante hipotônica. ⚠️ Risco de hemólise se infundido rapidamente."
   }
-]  ;
-  fireReady();
-}
-
-// Carrega dados: JSON (web) ou fallback inline (file://)
-if (!isFile) {
-  fetch('js/data/drugs.json')
-    .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-    .then(function(d) { AMLS.DRUGS = d; fireReady(); })
-    .catch(function() { loadFallback(); });
-} else {
-  loadFallback();
-}
+]
