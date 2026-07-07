@@ -2234,5 +2234,952 @@
       }
     ],
     "observations": "Reversor seletivo de rocurônio/vecurônio (encapsula a molécula). Dose 16 mg/kg para reversão profunda, 2-4 mg/kg para moderada. ⚠️ Bradicardia, anafilaxia. Custo elevado. Não reverte succinilcolina nem outros bloqueadores."
+  },
+  {
+    "id": "aas",
+    "name": "AAS (Ácido Acetilsalicílico)",
+    "category": "iam",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Aspirina",
+      "AAS (genérico)"
+    ],
+    "safeRange": {
+      "min": 150,
+      "max": 300,
+      "unit": "mg VO mastigado",
+      "notes": "Ataque. Manutenção: 100 mg/dia"
+    },
+    "calcMode": "fixedText",
+    "dilutions": [
+      {
+        "label": "Comprimido 100-500 mg — mastigar, VO",
+        "institution": "geral"
+      }
+    ],
+    "observations": "Base da terapia antiagregante no IAM. Iniciar imediatamente. ⚠️ CI: alergia, sangramento ativo, úlcera péptica ativa."
+  },
+  {
+    "id": "clopidogrel",
+    "name": "Clopidogrel",
+    "category": "iam",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Plavix"
+    ],
+    "safeRange": {
+      "min": 300,
+      "max": 600,
+      "unit": "mg VO",
+      "notes": "300mg (trombólise) ou 600mg (ICP). Manut: 75mg/dia"
+    },
+    "calcMode": "fixedText",
+    "dilutions": [
+      {
+        "label": "Comprimido 75 mg — VO",
+        "institution": "geral"
+      }
+    ],
+    "observations": "Associar AAS (DAPT). Se TNK ou > 75a: sem ataque, 75 mg. ⚠️ Risco de sangramento."
+  },
+  {
+    "id": "prasugrel",
+    "name": "Prasugrel",
+    "category": "iam",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Efient"
+    ],
+    "safeRange": {
+      "min": 60,
+      "max": 60,
+      "unit": "mg VO",
+      "notes": "Ataque. Manutenção: 10 mg/dia"
+    },
+    "calcMode": "fixedText",
+    "dilutions": [
+      {
+        "label": "Comprimido 10 mg — VO",
+        "institution": "geral"
+      }
+    ],
+    "observations": "❌ Contraindicado se AVC/AIT prévio, > 75a ou < 60 kg."
+  },
+  {
+    "id": "ticagrelor",
+    "name": "Ticagrelor",
+    "category": "iam",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Brilinta"
+    ],
+    "safeRange": {
+      "min": 180,
+      "max": 180,
+      "unit": "mg VO",
+      "notes": "Ataque. Manutenção: 90 mg 12/12h"
+    },
+    "calcMode": "fixedText",
+    "dilutions": [
+      {
+        "label": "Comprimido 90 mg — VO",
+        "institution": "geral"
+      }
+    ],
+    "observations": "Alternativa potente ao clopidogrel. ⚠️ Dispneia, sangramento."
+  },
+  {
+    "id": "enoxaparina",
+    "name": "Enoxaparina",
+    "category": "iam",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Clexane"
+    ],
+    "ampoule": {
+      "mg": 60,
+      "mL": 0.6
+    },
+    "safeRange": {
+      "min": 1,
+      "max": 1,
+      "unit": "mg/kg SC 12/12h",
+      "notes": "IAMCSST: bolus 30mg EV + 1mg/kg SC. > 75a: 0,75mg/kg SC sem bolus"
+    },
+    "calcMode": "weightBolus",
+    "dilutions": [
+      {
+        "label": "60 mg/0,6 mL (seringa pré-cheia) — SC",
+        "conc": 100,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      },
+      {
+        "label": "Bolus EV 30 mg (ampola EV dedicada)",
+        "conc": 300,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "HBPM. IAMCSST: Bolus 30 mg EV → 1 mg/kg SC 12/12h. > 75a: sem bolus, 0,75 mg/kg SC. ⚠️ CI: plaquetas < 100.000. Monitorar anti-Xa se CrCl 15-30 ou peso > 100 kg."
+  },
+  {
+    "id": "atorvastatina",
+    "name": "Atorvastatina",
+    "category": "iam",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Lipitor"
+    ],
+    "safeRange": {
+      "min": 80,
+      "max": 80,
+      "unit": "mg VO",
+      "notes": "Dose de ataque no IAM"
+    },
+    "calcMode": "fixedText",
+    "dilutions": [
+      {
+        "label": "Comprimido 80 mg — VO",
+        "institution": "geral"
+      }
+    ],
+    "observations": "Iniciar estatina de alta potência independentemente do lipidograma na admissão do IAM."
+  },
+  {
+    "id": "tenecteplase",
+    "name": "Tenecteplase (TNK-tPA)",
+    "category": "iam",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Metalyse"
+    ],
+    "safeRange": {
+      "min": 30,
+      "max": 50,
+      "unit": "mg EV bolus único",
+      "notes": "<60kg:30mg; 60-70:35; 70-80:40; 80-90:45; ≥90:50. ≥75a: metade"
+    },
+    "calcMode": "fixedText",
+    "dilutions": [
+      {
+        "label": "Reconstituir conforme fabricante — bolus EV único em 5-10s",
+        "institution": "geral"
+      }
+    ],
+    "observations": "Fibrinolítico de escolha (bolus único). Dose por peso: <60kg=30mg, 60-70=35, 70-80=40, 80-90=45, ≥90=50. ⚠️ ≥ 75 anos: METADE da dose. Múltiplas contraindicações (SNC, sangramento ativo, dissecção). Reperfusão: ↓ST ≥ 50% em 60-90 min."
+  },
+  {
+    "id": "alteplase",
+    "name": "Alteplase (rTPA)",
+    "category": "iam",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Actilyse"
+    ],
+    "safeRange": {
+      "min": 15,
+      "max": 100,
+      "unit": "mg EV total",
+      "notes": "15mg bolus → 0,75mg/kg (máx 50mg) 30min → 0,5mg/kg (máx 35mg) 60min. Total máx 100mg"
+    },
+    "calcMode": "fixedText",
+    "dilutions": [
+      {
+        "label": "Reconstituir conforme fabricante — infusão EV multifásica",
+        "institution": "geral"
+      }
+    ],
+    "observations": "Dose total máx 100 mg. 15 mg bolus → 0,75 mg/kg (máx 50 mg) em 30 min → 0,5 mg/kg (máx 35 mg) em 60 min. Mais usado para AVC isquêmico. ⚠️ Múltiplas contraindicações."
+  },
+  {
+    "id": "adenosina",
+    "name": "Adenozina",
+    "category": "antiarrhythmic",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Adenocor"
+    ],
+    "ampoule": {
+      "mg": 6,
+      "mL": 2
+    },
+    "safeRange": {
+      "min": 6,
+      "max": 12,
+      "unit": "mg EV rush",
+      "notes": "6mg → se falhar 12mg. Flush SF rápido"
+    },
+    "calcMode": "fixedRange",
+    "rateBasis": "oneTime",
+    "dilutions": [
+      {
+        "label": "3 mg/mL (ampola 6mg/2mL) — EV rush + flush SF",
+        "conc": 3,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "TSVP (reentrada nodal) — diagnóstica e terapêutica. 6 mg EV rush → 12 mg se falhar. ⚠️ Bradicardia transitória, broncoespasmo. ❌ CI: FA pré-excitada (WPW)."
+  },
+  {
+    "id": "metoprolol",
+    "name": "Metoprolol",
+    "category": "antiarrhythmic",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Seloken"
+    ],
+    "ampoule": {
+      "mg": 5,
+      "mL": 5
+    },
+    "safeRange": {
+      "min": 5,
+      "max": 15,
+      "unit": "mg EV lento",
+      "notes": "5mg EV 1-2min, repetir 5min até 15-20mg"
+    },
+    "calcMode": "fixedRange",
+    "rateBasis": "oneTime",
+    "dilutions": [
+      {
+        "label": "1 mg/mL (ampola 5mg/5mL) — EV lento 1-2 min",
+        "conc": 1,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "FA controle FC, TSVP, IAM, dissecção de aorta (1ª escolha BB). 5 mg EV lento, repetir até 15-20 mg. ⚠️ Bradicardia, BAV. ❌ CI: asma grave, choque cardiogênico. Preferir Esmolol se instabilidade HD."
+  },
+  {
+    "id": "diltiazem",
+    "name": "Diltiazem",
+    "category": "antiarrhythmic",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Cardizem"
+    ],
+    "ampoule": {
+      "mg": 25,
+      "mL": 5
+    },
+    "safeRange": {
+      "min": 0.25,
+      "max": 0.25,
+      "unit": "mg/kg EV 2min",
+      "notes": "Bolus 0,25mg/kg. BIC: 5-15mg/h"
+    },
+    "calcMode": "weightBolus",
+    "dilutions": [
+      {
+        "label": "5 mg/mL (ampola 25mg/5mL) — EV em 2 min",
+        "conc": 5,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "FA controle FC, TSVP. Bolus 0,25 mg/kg EV 2 min → BIC 5-15 mg/h. ⚠️ Hipotensão (menor que Verapamil). ❌ CI: FA pré-excitada, BAV, ICC."
+  },
+  {
+    "id": "verapamil",
+    "name": "Verapamil",
+    "category": "antiarrhythmic",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Dilacoron"
+    ],
+    "ampoule": {
+      "mg": 5,
+      "mL": 2
+    },
+    "safeRange": {
+      "min": 2.5,
+      "max": 5,
+      "unit": "mg EV 2min",
+      "notes": "Repetir 5-10mg em 15-30min se necessário"
+    },
+    "calcMode": "fixedRange",
+    "rateBasis": "oneTime",
+    "dilutions": [
+      {
+        "label": "2,5 mg/mL (ampola 5mg/2mL) — EV lento 2 min",
+        "conc": 2.5,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "TSVP 2ª linha (após adenosina). 2,5-5 mg EV 2 min, repetir 5-10 mg em 15-30 min. ⚠️ Hipotensão. ❌ NÃO usar em TV de QRS largo (risco de colapso). ❌ CI: FA pré-excitada, BAV."
+  },
+  {
+    "id": "isoproterenol",
+    "name": "Isoproterenol",
+    "category": "antiarrhythmic",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Isuprel"
+    ],
+    "ampoule": {
+      "mcg": 200,
+      "mL": 1
+    },
+    "safeRange": {
+      "min": 2,
+      "max": 10,
+      "unit": "mcg/min EV BIC",
+      "notes": "Ponte para marcapasso. Torsades bradi-dependente"
+    },
+    "calcMode": "fixedRange",
+    "rateBasis": "perMin",
+    "dilutions": [
+      {
+        "label": "0,2 mg/mL (ampola) — diluir em SG5% 250mL para BIC",
+        "conc": 200,
+        "concUnit": "mcg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "BIC 2-10 mcg/min. Bradicardia como ponte para marcapasso. Torsades de Pointes bradi-dependente. ⚠️ Taquiarritmia, isquemia miocárdica. Usar apenas como ponte para MP."
+  },
+  {
+    "id": "diazepam",
+    "name": "Diazepam",
+    "category": "anticonvulsant",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Valium"
+    ],
+    "ampoule": {
+      "mg": 10,
+      "mL": 2
+    },
+    "safeRange": {
+      "min": 5,
+      "max": 10,
+      "unit": "mg EV",
+      "notes": "Status epilepticus fase 1 (0-5 min)"
+    },
+    "calcMode": "fixedRange",
+    "rateBasis": "oneTime",
+    "dilutions": [
+      {
+        "label": "5 mg/mL (ampola 10mg/2mL) — EV lento",
+        "conc": 5,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "1ª linha BDZ no status epilepticus (fase 1, 0-5 min). 5-10 mg EV. ⚠️ Depressão respiratória, hipotensão. Alternativa: Midazolam 10 mg IM se sem acesso venoso."
+  },
+  {
+    "id": "levetiracetam",
+    "name": "Levetiracetam",
+    "category": "anticonvulsant",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Keppra"
+    ],
+    "ampoule": {
+      "mg": 500,
+      "mL": 5
+    },
+    "safeRange": {
+      "min": 2000,
+      "max": 2000,
+      "unit": "mg EV 15min",
+      "notes": "Status epilepticus fase 2 (5-20 min). 4 amps"
+    },
+    "calcMode": "fixedRange",
+    "rateBasis": "oneTime",
+    "dilutions": [
+      {
+        "label": "100 mg/mL (ampola 500mg/5mL) — EV em 15 min",
+        "conc": 100,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "Status epilepticus fase 2. 2.000 mg EV (4 amps) em 15 min. Perfil favorável (poucas interações, sem monitorização de nível). ⚠️ Ajustar em CrCl < 80."
+  },
+  {
+    "id": "valproato",
+    "name": "Valproato de Sódio",
+    "category": "anticonvulsant",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Depakote"
+    ],
+    "ampoule": {
+      "mg": 500,
+      "mL": 5
+    },
+    "safeRange": {
+      "min": 20,
+      "max": 40,
+      "unit": "mg/kg EV 10min",
+      "notes": "Status epilepticus fase 2"
+    },
+    "calcMode": "weightBolus",
+    "dilutions": [
+      {
+        "label": "100 mg/mL (ampola 500mg/5mL) — EV em 10 min",
+        "conc": 100,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "Status epilepticus fase 2 — alternativa à fenitoína. 20-40 mg/kg EV em 10 min. ⚠️ Hepatotoxicidade, pancreatite, trombocitopenia."
+  },
+  {
+    "id": "fenobarbital",
+    "name": "Fenobarbital",
+    "category": "anticonvulsant",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Fenobarbital (genérico)"
+    ],
+    "ampoule": {
+      "mg": 100,
+      "mL": 1
+    },
+    "safeRange": {
+      "min": 15,
+      "max": 20,
+      "unit": "mg/kg EV lento",
+      "notes": "Status epilepticus fase 3 (20-40 min). Paciente já IOT"
+    },
+    "calcMode": "weightBolus",
+    "dilutions": [
+      {
+        "label": "100 mg/mL (ampola) — EV lento (≤ 100 mg/min)",
+        "conc": 100,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "3ª linha no SE (fase 3, 20-40 min, paciente já IOT). 15-20 mg/kg EV lento. ⚠️ Depressão respiratória intensa, hipotensão, sedação prolongada (meia-vida 50-120h). EEG burst-suppression."
+  },
+  {
+    "id": "tiamina",
+    "name": "Tiamina (Vitamina B1)",
+    "category": "anticonvulsant",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Tiamina (genérico)"
+    ],
+    "ampoule": {
+      "mg": 100,
+      "mL": 1
+    },
+    "safeRange": {
+      "min": 100,
+      "max": 100,
+      "unit": "mg EV/IM",
+      "notes": "Profilaxia Wernicke em alcoolista"
+    },
+    "calcMode": "fixedRange",
+    "rateBasis": "oneTime",
+    "dilutions": [
+      {
+        "label": "100 mg/mL (ampola) — EV lento ou IM",
+        "conc": 100,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "SEMPRE administrar antes da glicose em alcoolistas (glicose sem tiamina → encefalopatia de Wernicke). 100 mg EV/IM. ⚠️ Reações anafiláticas raras."
+  },
+  {
+    "id": "ondansetrona",
+    "name": "Ondansetrona",
+    "category": "symptomatic",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Zofran",
+      "Vonau"
+    ],
+    "ampoule": {
+      "mg": 8,
+      "mL": 4
+    },
+    "safeRange": {
+      "min": 4,
+      "max": 8,
+      "unit": "mg EV lento",
+      "notes": "Padrão 8 mg"
+    },
+    "calcMode": "fixedRange",
+    "rateBasis": "oneTime",
+    "dilutions": [
+      {
+        "label": "2 mg/mL (ampola 8mg/4mL) — EV lento",
+        "conc": 2,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "1ª escolha antiemético na emergência. 4-8 mg EV. NÃO prolonga QT significativamente (diferente da metoclopramida em altas doses). Dar para TODO paciente que vomitar."
+  },
+  {
+    "id": "metoclopramida",
+    "name": "Metoclopramida (Plasil)",
+    "category": "symptomatic",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Plasil"
+    ],
+    "ampoule": {
+      "mg": 10,
+      "mL": 2
+    },
+    "safeRange": {
+      "min": 10,
+      "max": 10,
+      "unit": "mg EV",
+      "notes": "Alternativa à ondansetrona"
+    },
+    "calcMode": "fixedRange",
+    "rateBasis": "oneTime",
+    "dilutions": [
+      {
+        "label": "5 mg/mL (ampola 10mg/2mL) — EV lento",
+        "conc": 5,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "2ª escolha antiemético. ⚠️ Distonia aguda (reversível com biperideno 5 mg IM). ⚠️ Prolonga QT em altas doses."
+  },
+  {
+    "id": "dipirona",
+    "name": "Dipirona (Metamizol)",
+    "category": "symptomatic",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Novalgin",
+      "Dipirona (genérico)"
+    ],
+    "ampoule": {
+      "mg": 1000,
+      "mL": 2
+    },
+    "safeRange": {
+      "min": 1,
+      "max": 2,
+      "unit": "g EV lento",
+      "notes": "Máx 5 g/24h. Diluir SF 100mL ou push 5-10min"
+    },
+    "calcMode": "fixedRange",
+    "rateBasis": "oneTime",
+    "dilutions": [
+      {
+        "label": "500 mg/mL (ampola 1g/2mL) — EV lento 5-10 min",
+        "conc": 500,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "1º degrau analgesia (dor leve-moderada). Antitérmico potente. ⚠️ Hipotensão se push rápido. ⚠️ Agranulocitose (rara). ❌ CI: porfiria aguda, deficiência de G6PD, alergia a pirazolônicos."
+  },
+  {
+    "id": "paracetamol",
+    "name": "Paracetamol",
+    "category": "symptomatic",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Tylenol",
+      "Paracetamol (genérico)"
+    ],
+    "ampoule": {
+      "mg": 1000,
+      "mL": 100
+    },
+    "safeRange": {
+      "min": 1,
+      "max": 1,
+      "unit": "g EV 15min",
+      "notes": "Sem efeito antiplaquetário"
+    },
+    "calcMode": "fixedRange",
+    "rateBasis": "oneTime",
+    "dilutions": [
+      {
+        "label": "10 mg/mL (frasco 1g/100mL pronto) — EV em 15 min",
+        "conc": 10,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "Analgesia/antitérmico. Sem efeito antiplaquetário (vantagem na emergência). ⚠️ Hepatotoxicidade se > 4 g/dia."
+  },
+  {
+    "id": "morfina",
+    "name": "Morfina",
+    "category": "symptomatic",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Dimorf",
+      "Morfina (genérico)"
+    ],
+    "ampoule": {
+      "mg": 10,
+      "mL": 1
+    },
+    "safeRange": {
+      "min": 2,
+      "max": 4,
+      "unit": "mg EV",
+      "notes": "Repetir 2mg 5/5min até controle. IAM: dor refratária"
+    },
+    "calcMode": "fixedRange",
+    "rateBasis": "oneTime",
+    "dilutions": [
+      {
+        "label": "10 mg/mL (ampola) — EV lento",
+        "conc": 10,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "3º degrau analgesia (dor intensa). IAM: 2-4 mg EV se dor refratária. ⚠️ Náusea, depressão respiratória, hipotensão (venodilatação). ❌ CONTRAINDICADO no infarto de VD! Antídoto: naloxona."
+  },
+  {
+    "id": "gluconato-calcio",
+    "name": "Gluconato de Cálcio 10%",
+    "category": "electrolyte",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Gluconato de Cálcio (genérico)"
+    ],
+    "ampoule": {
+      "mg": 1000,
+      "mL": 10
+    },
+    "safeRange": {
+      "min": 10,
+      "max": 20,
+      "unit": "mL EV 5-10min",
+      "notes": "1-2 amps. Hipercalemia ECG alterado: repetir 5min"
+    },
+    "calcMode": "fixedRange",
+    "rateBasis": "oneTime",
+    "dilutions": [
+      {
+        "label": "10% (100 mg/mL) — EV lento 5-10 min, puro ou diluir SG5%",
+        "conc": 100,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "Hipercalemia (estabiliza membrana — NÃO ↓ K⁺), hipocalcemia sintomática, hipermagnesemia, transfusão maciça. 1-2 amps (10-20 mL) EV 5-10 min. ⚠️ NÃO corrige K, só protege coração. ⚠️ Necrose se extravasar. ❌ Não misturar com bicarbonato (precipita)."
+  },
+  {
+    "id": "cloreto-calcio",
+    "name": "Cloreto de Cálcio 10%",
+    "category": "electrolyte",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Cloreto de Cálcio (genérico)"
+    ],
+    "ampoule": {
+      "mg": 1000,
+      "mL": 10
+    },
+    "safeRange": {
+      "min": 8,
+      "max": 8,
+      "unit": "mL EV",
+      "notes": "1 amp em 100mL SG5%. Preferir acesso central"
+    },
+    "calcMode": "fixedRange",
+    "rateBasis": "oneTime",
+    "dilutions": [
+      {
+        "label": "10% (100 mg/mL) — diluir 8mL em 100mL SG5%, EV. Acesso central",
+        "conc": 100,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "3× mais cálcio elementar que gluconato (mais potente). ⚠️ Necrose tecidual grave se extravasamento — preferir acesso CENTRAL! ⚠️ Bradicardia se rápido."
+  },
+  {
+    "id": "kcl",
+    "name": "Cloreto de Potássio (KCl 19,1%)",
+    "category": "electrolyte",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "KCl (genérico)"
+    ],
+    "ampoule": {
+      "mg": 1910,
+      "mL": 10
+    },
+    "safeRange": {
+      "min": 25,
+      "max": 50,
+      "unit": "mEq EV",
+      "notes": "1-2 amps em 500-1000mL SF. Máx perif: 10mEq/h. Máx central: 20-40mEq/h"
+    },
+    "calcMode": "fixedText",
+    "dilutions": [
+      {
+        "label": "19,1% (2,55 mEq/mL, 25 mEq/amp 10mL) — diluir em 500mL SF. SEMPRE em bomba",
+        "institution": "geral"
+      }
+    ],
+    "observations": "Hipocalemia grave (K < 3,0 ou ECG alterado). 1 amp = 25 mEq. ⚠️ NUNCA em bolus rápido → ARRITMIA FATAL / ASSISTOLIA. Sempre em BOMBA. Velocidade máx periférica: 10 mEq/h. Central: 20-40 mEq/h. 70kg: 40 mEq em 500mL SF a 125mL/h (4h)."
+  },
+  {
+    "id": "manitol",
+    "name": "Manitol 20%",
+    "category": "electrolyte",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Manitol (genérico)"
+    ],
+    "ampoule": {
+      "mg": 50000,
+      "mL": 250
+    },
+    "safeRange": {
+      "min": 0.5,
+      "max": 1,
+      "unit": "g/kg EV 20min",
+      "notes": "HIC/herniação. 70kg: 175-350mL"
+    },
+    "calcMode": "weightBolus",
+    "dilutions": [
+      {
+        "label": "20% (200 mg/mL, frasco 250mL = 50g) — EV em 20 min",
+        "conc": 200,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "HIC/herniação. 0,5-1 g/kg EV em 20 min (70kg: 175-350 mL). ⚠️ Evitar se hipovolêmico/DRC. Diurético osmótico — monitorar diurese e Na⁺. Efeito em 15-30 min."
+  },
+  {
+    "id": "dexametasona",
+    "name": "Dexametasona",
+    "category": "emergency",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Decadron"
+    ],
+    "ampoule": {
+      "mg": 10,
+      "mL": 2.5
+    },
+    "safeRange": {
+      "min": 10,
+      "max": 20,
+      "unit": "mg EV",
+      "notes": "HIC 10mg. Anafilaxia 8-20mg. Meningite 0,15mg/kg 6/6h"
+    },
+    "calcMode": "fixedRange",
+    "rateBasis": "oneTime",
+    "dilutions": [
+      {
+        "label": "4 mg/mL (ampola 10mg/2,5mL) — EV lento",
+        "conc": 4,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "HIC (edema cerebral): 10 mg EV. Anafilaxia: 8-20 mg EV. Meningite: 0,15 mg/kg 6/6h. Push lento. Efeito anti-inflamatório em 12-24h. NÃO é broncodilatador (ação tardia)."
+  },
+  {
+    "id": "hidrocortisona",
+    "name": "Hidrocortisona",
+    "category": "emergency",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Solucortef"
+    ],
+    "ampoule": {
+      "mg": 100,
+      "mL": 2
+    },
+    "safeRange": {
+      "min": 50,
+      "max": 50,
+      "unit": "mg EV 6/6h",
+      "notes": "Choque séptico refratário. 200mg/dia por 7 dias"
+    },
+    "calcMode": "fixedRange",
+    "rateBasis": "oneTime",
+    "dilutions": [
+      {
+        "label": "50 mg/mL (frasco 100mg + 2mL diluente) — EV",
+        "conc": 50,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "Choque séptico refratário (NORA > 0,25 mcg/kg/min + PAM < 65). 50 mg EV 6/6h (200 mg/dia) por 7 dias. NÃO usar corticoide na sepse sem choque refratário."
+  },
+  {
+    "id": "acido-tranexamico",
+    "name": "Ácido Tranexâmico (TXA)",
+    "category": "emergency",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Transamin",
+      "TXA (genérico)"
+    ],
+    "ampoule": {
+      "mg": 500,
+      "mL": 5
+    },
+    "safeRange": {
+      "min": 1,
+      "max": 1,
+      "unit": "g EV 10min + 1g EV 8h",
+      "notes": "Até 3h do trauma. Após 3h ↑ mortalidade"
+    },
+    "calcMode": "fixedRange",
+    "rateBasis": "oneTime",
+    "dilutions": [
+      {
+        "label": "100 mg/mL (ampola 500mg/5mL) — 1g EV em 10 min + 1g EV em 8h",
+        "conc": 100,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "Trauma hemorrágico: 1 g EV em 10 min + 1 g EV em 8h. ⚠️ Administrar ATÉ 3h do trauma — após 3h AUMENTA mortalidade. Antifibrinolítico."
+  },
+  {
+    "id": "glicose-50",
+    "name": "Glicose 50%",
+    "category": "emergency",
+    "institutions": [
+      "geral"
+    ],
+    "commercialNames": [
+      "Glicose 50% (genérico)"
+    ],
+    "ampoule": {
+      "mg": 10000,
+      "mL": 20
+    },
+    "safeRange": {
+      "min": 40,
+      "max": 50,
+      "unit": "mL EV",
+      "notes": "Hipoglicemia (Dextro < 70). CAD: se glic < 60"
+    },
+    "calcMode": "fixedRange",
+    "rateBasis": "oneTime",
+    "dilutions": [
+      {
+        "label": "50% (500 mg/mL, ampola 20mL = 10g) — EV lento",
+        "conc": 500,
+        "concUnit": "mg/mL",
+        "institution": "geral"
+      }
+    ],
+    "observations": "Hipoglicemia (Dextro < 70 mg/dL): 40-50 mL EV. ⚠️ Administrar após tiamina em alcoolistas. Irritante venoso — acessos calibrosos. Monitorar glicemia."
   }
 ]

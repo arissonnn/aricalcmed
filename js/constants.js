@@ -26,52 +26,82 @@ AMLS.RSI_CHECKLIST = [
 ];
 
 AMLS.CATEGORY_ORDER = [
-  'vasopressor', 'inotrope', 'continuous-sedation', 'sedative',
-  'rsi-premedication', 'rsi-induction', 'rsi-blocker', 'continuous-blocker', 'acls', 'other'
+  'vasopressor', 'inotrope',
+  'iam', 'antiarrhythmic', 'acls',
+  'continuous-sedation', 'sedative',
+  'rsi-premedication', 'rsi-induction', 'rsi-blocker', 'continuous-blocker',
+  'anticonvulsant',
+  'electrolyte',
+  'emergency',
+  'symptomatic',
+  'other'
 ];
 
 AMLS.CATEGORY_LABELS = {
   'vasopressor': 'Vasopressores',
   'inotrope': 'Inotrópicos',
+  'iam': 'IAM / SCA',
+  'antiarrhythmic': 'Antiarrítmicos',
+  'acls': 'ACLS / Ressuscitação',
   'continuous-sedation': 'Sedação Contínua (VM)',
   'sedative': 'Sedativos — Bolus',
   'rsi-premedication': 'RSI — Pré-medicação',
   'rsi-induction': 'RSI — Indução',
   'rsi-blocker': 'RSI — Bloqueador Neuromuscular',
   'continuous-blocker': 'Bloqueador Neuromuscular (Contínuo)',
-  'acls': 'ACLS / Ressuscitação',
+  'anticonvulsant': 'Anticonvulsivantes',
+  'electrolyte': 'Eletrólitos / Distúrbios',
+  'emergency': 'Emergência',
+  'symptomatic': 'Sintomáticos',
   'other': 'Outras'
 };
 
-AMLS.SUPER_ORDER = ['vasoactive', 'sedation', 'rsi', 'acls', 'other'];
+AMLS.SUPER_ORDER = [
+  'vasoactive', 'cardio', 'sedation', 'rsi', 'neuro',
+  'metabolic', 'emergency', 'symptomatic', 'other'
+];
 
 AMLS.SUPER_LABELS = {
   'vasoactive': 'Vasoativos',
+  'cardio': 'Cardiovascular',
   'sedation': 'Sedação',
   'rsi': 'Intubação (RSI)',
-  'acls': 'ACLS / Ressuscitação',
+  'neuro': 'Neurológico',
+  'metabolic': 'Metabólico / Eletrólitos',
+  'emergency': 'Emergência',
+  'symptomatic': 'Sintomáticos',
   'other': 'Outras'
 };
 
 AMLS.SUPER_COLORS = {
   'vasoactive': 'red',
+  'cardio': 'red',
   'sedation': 'blue',
   'rsi': 'amber',
-  'acls': 'red',
+  'neuro': 'blue',
+  'metabolic': 'amber',
+  'emergency': 'red',
+  'symptomatic': 'teal',
   'other': 'teal'
 };
 
 AMLS.SUPER_CATEGORIES = {
   'vasoactive': ['vasopressor', 'inotrope'],
+  'cardio': ['iam', 'antiarrhythmic', 'acls'],
   'sedation': ['continuous-sedation', 'sedative'],
   'rsi': ['rsi-premedication', 'rsi-induction', 'rsi-blocker', 'continuous-blocker'],
-  'acls': ['acls'],
+  'neuro': ['anticonvulsant'],
+  'metabolic': ['electrolyte'],
+  'emergency': ['emergency'],
+  'symptomatic': ['symptomatic'],
   'other': ['other']
 };
 
 AMLS.CATEGORY_COLOR = {
   'vasopressor': 'red',
   'inotrope': 'red',
+  'iam': 'red',
+  'antiarrhythmic': 'red',
   'acls': 'red',
   'continuous-sedation': 'blue',
   'sedative': 'blue',
@@ -79,5 +109,9 @@ AMLS.CATEGORY_COLOR = {
   'rsi-induction': 'amber',
   'rsi-blocker': 'amber',
   'continuous-blocker': 'amber',
+  'anticonvulsant': 'blue',
+  'electrolyte': 'amber',
+  'emergency': 'red',
+  'symptomatic': 'teal',
   'other': 'teal'
 };

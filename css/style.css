@@ -706,10 +706,10 @@ input:focus-visible, button:focus-visible {
   border-color: var(--text-muted);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
 }
-.drug-card.cat-vasopressor, .drug-card.cat-inotrope, .drug-card.cat-acls { border-left-color: var(--cat-red); }
-.drug-card.cat-continuous-sedation, .drug-card.cat-sedative { border-left-color: var(--cat-blue); }
-.drug-card.cat-rsi-premedication, .drug-card.cat-rsi-induction, .drug-card.cat-rsi-blocker, .drug-card.cat-continuous-blocker { border-left-color: var(--cat-amber); }
-.drug-card.cat-other { border-left-color: var(--cat-teal); }
+.drug-card.cat-vasopressor, .drug-card.cat-inotrope, .drug-card.cat-iam, .drug-card.cat-antiarrhythmic, .drug-card.cat-acls, .drug-card.cat-emergency { border-left-color: var(--cat-red); }
+.drug-card.cat-continuous-sedation, .drug-card.cat-sedative, .drug-card.cat-anticonvulsant { border-left-color: var(--cat-blue); }
+.drug-card.cat-rsi-premedication, .drug-card.cat-rsi-induction, .drug-card.cat-rsi-blocker, .drug-card.cat-continuous-blocker, .drug-card.cat-electrolyte { border-left-color: var(--cat-amber); }
+.drug-card.cat-symptomatic, .drug-card.cat-other { border-left-color: var(--cat-teal); }
 
 .drug-card__header {
   display: grid;
@@ -755,13 +755,19 @@ input:focus-visible, button:focus-visible {
 /* Range category color matching */
 .drug-card.cat-vasopressor .drug-card__range,
 .drug-card.cat-inotrope .drug-card__range,
-.drug-card.cat-acls .drug-card__range { border-left-color: var(--cat-red); }
+.drug-card.cat-iam .drug-card__range,
+.drug-card.cat-antiarrhythmic .drug-card__range,
+.drug-card.cat-acls .drug-card__range,
+.drug-card.cat-emergency .drug-card__range { border-left-color: var(--cat-red); }
 .drug-card.cat-continuous-sedation .drug-card__range,
-.drug-card.cat-sedative .drug-card__range { border-left-color: var(--cat-blue); }
+.drug-card.cat-sedative .drug-card__range,
+.drug-card.cat-anticonvulsant .drug-card__range { border-left-color: var(--cat-blue); }
 .drug-card.cat-rsi-premedication .drug-card__range,
 .drug-card.cat-rsi-induction .drug-card__range,
 .drug-card.cat-rsi-blocker .drug-card__range,
-.drug-card.cat-continuous-blocker .drug-card__range { border-left-color: var(--cat-amber); }
+.drug-card.cat-continuous-blocker .drug-card__range,
+.drug-card.cat-electrolyte .drug-card__range { border-left-color: var(--cat-amber); }
+.drug-card.cat-symptomatic .drug-card__range,
 .drug-card.cat-other .drug-card__range { border-left-color: var(--cat-teal); }
 .drug-card__commercial {
   font-size: 10.5px;
